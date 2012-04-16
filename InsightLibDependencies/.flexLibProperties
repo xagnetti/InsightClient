@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="flex.utils.spark.IClassNamable"/>
+    <classEntry path="flex.utils.spark.SnappableContainer"/>
+    <classEntry path="flex.utils.spark.SnappableContainerSkin"/>
+    <classEntry path="flex.utils.spark.TitledBorderBox"/>
+    <classEntry path="flex.utils.spark.TitledBorderBoxSkin"/>
+    <classEntry path="flex.utils.spark.collapsible.CollapsiblePanelSkin"/>
+    <classEntry path="flex.utils.spark.resize.DragHandle"/>
+    <classEntry path="flex.utils.spark.resize.MoveManager"/>
+    <classEntry path="flex.utils.spark.resize.ResizableComboBoxSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableDraggableSelectableTitleWindowSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableDropDownListSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableHScrollBar"/>
+    <classEntry path="flex.utils.spark.resize.ResizableLabel"/>
+    <classEntry path="flex.utils.spark.resize.ResizablePanelSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableScrollerSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableTextAreaSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableTitleWindowSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableTitledBorderBoxSkin"/>
+    <classEntry path="flex.utils.spark.resize.ResizableVScrollBar"/>
+    <classEntry path="flex.utils.spark.resize.ResizeHandleDots"/>
+    <classEntry path="flex.utils.spark.resize.ResizeHandleLines"/>
+    <classEntry path="flex.utils.spark.resize.ResizeManager"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

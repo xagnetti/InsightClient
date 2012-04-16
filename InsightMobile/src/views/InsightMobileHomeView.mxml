@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="HomeView">
+	
+	<fx:Declarations>
+		<s:HTTPService id="insightApi" url="http://adobead-6tm1ol6.eur.adobe.com/Profiles/Custom/API.query"
+					   resultFormat="text"
+					   >
+			<s:headers>
+				<fx:Object>
+					<fx:Accept>
+						<fx:String>application/json</fx:String>
+					</fx:Accept>
+				</fx:Object>
+			</s:headers>
+		</s:HTTPService>
+		<s:ArrayCollection id="dimensions"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.events.ResultEvent;
+			protected function getSchemaHandler(event:MouseEvent):void
+			{
+				insightApi.addEventListener(ResultEvent.RESULT, onGetSchemaResultHandler);
+				insightApi.send({Action:"get-schema",Format:"json-flat"});
+			}
+			
+			protected function onGetSchemaResultHandler(event:ResultEvent):void
+			{
+				insightApi.removeEventListener(ResultEvent.RESULT, onGetSchemaResultHandler);
+				var obj:Object = JSON.parse(event.result.toString());
+				
+				for each (var i:Object in obj)
+				{
+					if ( i["type"] == "SchemaDim" )
+						dimensions.addItem( i["name"] )
+				}
+			}
+			
+			protected function executeQueryHandler(event:MouseEvent):void
+			{
+				insightApi.addEventListener(ResultEvent.RESULT, onQueryResultHandler);
+				insightApi.send({Action:"create",Format:"json", Completion:"0", Language:"Expression", query:queryStr.text});
+			}
+
+			protected function onQueryResultHandler(event:ResultEvent):void
+			{
+				var i : int = 0;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:VGroup>
+		<s:Button label="Get schema" click="getSchemaHandler(event)"/>
+		
+		<s:TextArea id="queryStr"/>
+		<s:Button label="Create Query" click="executeQueryHandler(event)"/>
+	</s:VGroup>
+
+</s:View>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:b2d="Box2D.flex.b2d.*"
+    xmlns:components="components.*"
+    xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:model="model.*"
+    xmlns:modules="modules.*"
+    xmlns:mx="library://ns.adobe.com/flex/mx"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:spark="flex.utils.spark.*"
+    width="1024"
+    height="1024"
+    >
+    <fx:Declarations>
+        <modules:EmptyDraggableWindow/>
+        <modules:ChartWindow/>
+    </fx:Declarations>
+    <fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace spark "flex.utils.spark.*";
+		@namespace resize "flex.utils.spark.resize.*";
+		
+		/*  Optional - you can make all Scroller's use the resizable scroller skin. */
+		s|Scroller {
+			skin-class: ClassReference("flex.utils.spark.resize.ResizableScrollerSkin");
+		}
+		
+		/* you can restrict the resize direction in CSS like this: */
+		.resizePanel {
+			/* 			resize-direction: vertical; */
+		}
+	</fx:Style>
+    <s:layout>
+        <s:HorizontalLayout/>
+    </s:layout>
+    <s:Panel height="100%"
+        skinClass="flex.utils.spark.collapsible.CollapsiblePanelSkin"
+        title="Widget List"
+        >
+        <s:List height="100%"
+            labelField="name"
+            dragEnabled="true"
+            >
+            <s:dataProvider>
+                <s:ArrayCollection>
+                    <model:ModuleModel>
+                        <model:name>EmptyDraggable Title Window</model:name>
+                        <model:className>modules.EmptyDraggableWindow</model:className>
+                    </model:ModuleModel>
+                    <model:ModuleModel>
+                        <model:name>Chart Window</model:name>
+                        <model:className>modules.ChartWindow</model:className>
+                    </model:ModuleModel>
+                </s:ArrayCollection>
+            </s:dataProvider>
+        </s:List>
+    </s:Panel>
+    <spark:SnappableContainer id="dashboard"
+        width="100%"
+        height="100%"
+        skinClass="flex.utils.spark.SnappableContainerSkin"
+        />
+
+    <s:Panel height="100%"
+        skinClass="flex.utils.spark.collapsible.CollapsiblePanelSkin"
+        title="Title panel Long.........."
+        >
+        <s:List height="100%"
+            labelField="name"
+            dropEnabled="true"
+            />
+    </s:Panel>
+</s:WindowedApplication>
