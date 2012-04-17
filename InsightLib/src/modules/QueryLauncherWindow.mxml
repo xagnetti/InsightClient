@@ -4,7 +4,6 @@
     xmlns:s="library://ns.adobe.com/flex/spark"
     width="350"
     height="300"
-    creationComplete="titlewindow1_creationCompleteHandler(event)"
     skinClass="flex.utils.spark.resize.ResizableDraggableSelectableTitleWindowSkin"
     title="Chart"
     >
@@ -18,18 +17,10 @@
             {
                 QueryManager.instance.createQuery( queryStr.text, "test" );
             }
-
-            protected function titlewindow1_creationCompleteHandler( event : FlexEvent ) : void
-            {
-                QueryManager.instance.getSchema();
-            }
         ]]>
     </fx:Script>
 
     <s:VGroup>
-
-        <s:List dataProvider="{ QueryManager.instance.dimensions }"
-            />
 
         <s:TextArea id="queryStr"
             >
@@ -37,6 +28,10 @@
         </s:TextArea>
         <s:Button label="Create Query"
             click="executeQueryHandler(event)"
+            />
+
+        <s:TextArea text="{ QueryManager.instance.currentResult }"
+            enabled="false"
             />
 
     </s:VGroup>

@@ -7,12 +7,13 @@
     xmlns:mx="library://ns.adobe.com/flex/mx"
     xmlns:s="library://ns.adobe.com/flex/spark"
     xmlns:spark="flex.utils.spark.*"
+    xmlns:views="views.*"
     width="1024"
     height="1024"
     >
     <fx:Declarations>
         <modules:EmptyDraggableWindow/>
-        <modules:ChartWindow/>
+        <modules:QueryLauncherWindow/>
     </fx:Declarations>
     <fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
@@ -33,15 +34,18 @@
     <s:layout>
         <s:HorizontalLayout/>
     </s:layout>
+
     <s:Panel height="100%"
         skinClass="flex.utils.spark.collapsible.CollapsiblePanelSkin"
         title="Widget List"
         >
+
         <s:List height="100%"
             labelField="name"
             dragEnabled="true"
             >
             <s:dataProvider>
+
                 <s:ArrayCollection>
                     <model:ModuleModel>
                         <model:name>EmptyDraggable Title Window</model:name>
@@ -49,25 +53,20 @@
                     </model:ModuleModel>
                     <model:ModuleModel>
                         <model:name>Chart Window</model:name>
-                        <model:className>modules.ChartWindow</model:className>
+                        <model:className>modules.QueryLauncherWindow</model:className>
                     </model:ModuleModel>
                 </s:ArrayCollection>
+
             </s:dataProvider>
         </s:List>
+
     </s:Panel>
-    <spark:SnappableContainer id="dashboard"
-        width="100%"
+
+    <spark:SnappableContainer width="100%"
         height="100%"
         skinClass="flex.utils.spark.SnappableContainerSkin"
         />
 
-    <s:Panel height="100%"
-        skinClass="flex.utils.spark.collapsible.CollapsiblePanelSkin"
-        title="Title panel Long.........."
-        >
-        <s:List height="100%"
-            labelField="name"
-            dropEnabled="true"
-            />
-    </s:Panel>
+    <views:LogPanel/>
+
 </s:WindowedApplication>

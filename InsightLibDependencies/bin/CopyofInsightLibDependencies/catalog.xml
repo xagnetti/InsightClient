@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<swc xmlns="http://www.adobe.com/flash/swccatalog/9">
+  <versions>
+    <swc version="1.2" />
+    <flex version="4.6.0" build="23201" minimumSupportedVersion="4.0.0" />
+  </versions>
+  <features>
+    <feature-script-deps />
+    <feature-files />
+  </features>
+  <libraries>
+    <library path="library.swf">
+      <script name="flex/utils/spark/resize/ResizeHandleDots" mod="1334556975000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizeHandleDots" /> 
+        <dep id="_flex_utils_spark_resize_ResizeHandleDotsWatcherSetupUtil" type="e" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="spark.primitives:Path" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="spark.primitives:Path" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.components:Group" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/IClassNamable" mod="1334562032000" signatureChecksum="2291277938" >
+        <def id="flex.utils.spark:IClassNamable" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/SnappableContainerSkin" mod="1334561443000" signatureChecksum="992282286" >
+        <def id="flex.utils.spark:SnappableContainerSkin" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="spark.layouts:BasicLayout" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flex.utils.spark:SnappableContainer" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.layouts:BasicLayout" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="flex.utils.spark:SnappableContainer" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="spark.components.supportClasses:Skin" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/MoveManager_moveIcon" mod="1334302637000" signatureChecksum="2327953908" >
+        <def id="flex.utils.spark.resize:MoveManager_moveIcon" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:BitmapAsset" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_DragHandleWatcherSetupUtil" mod="1334562428889" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_DragHandleWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:DragHandle" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizeHandleDotsWatcherSetupUtil" mod="1334562428722" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizeHandleDotsWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleDots" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/TitledBorderBox" mod="1334561482000" signatureChecksum="3427233737" >
+        <def id="flex.utils.spark:TitledBorderBox" /> 
+        <dep id="flash.events:Event" type="e" /> 
+        <dep id="mx.styles:CSSStyleDeclaration" type="e" /> 
+        <dep id="String" type="e" /> 
+        <dep id="Number" type="e" /> 
+        <dep id="mx.core:FlexGlobals" type="e" /> 
+        <dep id="flex.utils.spark:TitledBorderBoxSkin" type="e" /> 
+        <dep id="Boolean" type="e" /> 
+        <dep id="uint" type="e" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="mx.styles:CSSStyleDeclaration" type="s" /> 
+        <dep id="mx.styles:IStyleManager2" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="spark.components:SkinnableContainer" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizeManager_resizeCursorIcon" mod="1334302637000" signatureChecksum="2099302693" >
+        <def id="flex.utils.spark.resize:ResizeManager_resizeCursorIcon" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:BitmapAsset" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableLabel" mod="1334556996000" signatureChecksum="1379698221" >
+        <def id="flex.utils.spark.resize:ResizableLabel" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.core:UIComponent" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="spark.components:Label" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableDraggableSelectableTitleWindowSkin" mod="1334561960000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableDraggableSelectableTitleWindowSkin" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="e" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="e" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="spark.components:Label" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="spark.components:TitleWindow" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.graphics:LinearGradient" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="mx.states:AddItems" type="e" /> 
+        <dep id="flex.utils.spark.resize:MoveManager" type="e" /> 
+        <dep id="mx.graphics:GradientEntry" type="e" /> 
+        <dep id="spark.components:Button" type="e" /> 
+        <dep id="spark.skins.spark:TitleWindowCloseButtonSkin" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="spark.components:CheckBox" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizableDraggableSelectableTitleWindowSkinWatcherSetupUtil" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="flex.utils.spark.resize:DragHandle" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="s" /> 
+        <dep id="flex.utils.spark.resize:MoveManager" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="mx.graphics:GradientEntry" type="s" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="s" /> 
+        <dep id="spark.components:Button" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="s" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="spark.components:CheckBox" type="s" /> 
+        <dep id="spark.layouts:VerticalLayout" type="s" /> 
+        <dep id="flash.events:MouseEvent" type="s" /> 
+        <dep id="flex.utils.spark.resize:DragHandle" type="s" /> 
+        <dep id="spark.components:TitleWindow" type="s" /> 
+        <dep id="mx.graphics:LinearGradient" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="mx.events:FlexEvent" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableVScrollBar" mod="1334556978000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableVScrollBar" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="spark.components:VScrollBar" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizableComboBoxSkinWatcherSetupUtil" mod="1334562428895" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizableComboBoxSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableComboBoxSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/collapsible/CollapsiblePanelSkin" mod="1334561274000" signatureChecksum="2831485798" >
+        <def id="flex.utils.spark.collapsible:CollapsiblePanelSkin" /> 
+        <dep id="spark.components:Panel" type="e" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="mx.states:AddItems" type="e" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="e" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="mx.graphics:GradientEntry" type="e" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="e" /> 
+        <dep id="_flex_utils_spark_collapsible_CollapsiblePanelSkinWatcherSetupUtil" type="e" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="spark.components:Label" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.graphics:LinearGradient" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="spark.components:Panel" type="s" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="mx.graphics:GradientEntry" type="s" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.layouts:VerticalLayout" type="s" /> 
+        <dep id="flash.events:MouseEvent" type="s" /> 
+        <dep id="mx.graphics:LinearGradient" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizeHandleLinesWatcherSetupUtil" mod="1334562428724" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizeHandleLinesWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizeManager" mod="1334556969000" signatureChecksum="1885217528" >
+        <def id="flex.utils.spark.resize:ResizeManager" /> 
+        <dep id="flash.events:Event" type="e" /> 
+        <dep id="flash.events:MouseEvent" type="e" /> 
+        <dep id="mx.events:ResizeEvent" type="e" /> 
+        <dep id="String" type="e" /> 
+        <dep id="mx.core:FlexGlobals" type="e" /> 
+        <dep id="flash.geom:Rectangle" type="e" /> 
+        <dep id="mx.managers:CursorManager" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager_resizeCursorIcon" type="e" /> 
+        <dep id="flash.utils:Dictionary" type="e" /> 
+        <dep id="flash.geom:Point" type="e" /> 
+        <dep id="mx.core:UIComponent" type="s" /> 
+        <dep id="flash.events:MouseEvent" type="s" /> 
+        <dep id="mx.events:ResizeEvent" type="s" /> 
+        <dep id="flash.geom:Rectangle" type="s" /> 
+        <dep id="flash.utils:Dictionary" type="s" /> 
+        <dep id="flash.geom:Point" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="flash.events:EventDispatcher" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/TitledBorderBoxSkin" mod="1334561559000" signatureChecksum="992282286" >
+        <def id="flex.utils.spark:TitledBorderBoxSkin" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="spark.primitives:Path" type="e" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="mx.utils:StringUtil" type="e" /> 
+        <dep id="Math" type="e" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="spark.layouts:BasicLayout" type="e" /> 
+        <dep id="spark.components:Label" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="flex.utils.spark:TitledBorderBox" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="_flex_utils_spark_TitledBorderBoxSkinWatcherSetupUtil" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.primitives:Path" type="s" /> 
+        <dep id="spark.layouts:BasicLayout" type="s" /> 
+        <dep id="flex.utils.spark:TitledBorderBox" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="flash.text:TextLineMetrics" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.components.supportClasses:Skin" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/SnappableContainer" mod="1334562049000" signatureChecksum="4233868173" >
+        <def id="flex.utils.spark:SnappableContainer" /> 
+        <dep id="mx.managers:DragManager" type="e" /> 
+        <dep id="flash.events:MouseEvent" type="e" /> 
+        <dep id="mx.core:IVisualElement" type="e" /> 
+        <dep id="spark.effects:Move" type="e" /> 
+        <dep id="flex.utils.spark:IClassNamable" type="e" /> 
+        <dep id="flash.geom:Rectangle" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="spark.effects.easing:Power" type="e" /> 
+        <dep id="mx.events:DragEvent" type="e" /> 
+        <dep id="mx.core:IVisualElement" type="s" /> 
+        <dep id="spark.effects:Move" type="s" /> 
+        <dep id="flex.utils.spark:IClassNamable" type="s" /> 
+        <dep id="flash.events:MouseEvent" type="s" /> 
+        <dep id="flash.geom:Rectangle" type="s" /> 
+        <dep id="mx.events:DragEvent" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="spark.components:SkinnableContainer" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizablePanelSkin" mod="1334561961000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizablePanelSkin" /> 
+        <dep id="spark.components:Panel" type="e" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="mx.states:AddItems" type="e" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="e" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="mx.graphics:GradientEntry" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizablePanelSkinWatcherSetupUtil" type="e" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="spark.components:Label" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.graphics:LinearGradient" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="spark.components:Panel" type="s" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="mx.graphics:GradientEntry" type="s" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.layouts:VerticalLayout" type="s" /> 
+        <dep id="mx.graphics:LinearGradient" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="mx.events:FlexEvent" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizableScrollerSkinWatcherSetupUtil" mod="1334562428745" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizableScrollerSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableScrollerSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_collapsible_CollapsiblePanelSkinWatcherSetupUtil" mod="1334562428878" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_collapsible_CollapsiblePanelSkinWatcherSetupUtil" /> 
+        <dep id="flex.utils.spark.collapsible:CollapsiblePanelSkin" type="e" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableComboBoxSkin" mod="1334557009000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableComboBoxSkin" /> 
+        <dep id="spark.components:TextInput" type="e" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizableComboBoxSkinWatcherSetupUtil" type="e" /> 
+        <dep id="spark.skins.spark:ComboBoxButtonSkin" type="e" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="e" /> 
+        <dep id="spark.components:Scroller" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="spark.components:PopUpAnchor" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.core:ClassFactory" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="mx.states:AddItems" type="e" /> 
+        <dep id="spark.components:Button" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="spark.skins.spark:DefaultItemRenderer" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableScrollerSkin" type="e" /> 
+        <dep id="spark.skins.spark:ComboBoxTextInputSkin" type="e" /> 
+        <dep id="spark.components:DataGroup" type="e" /> 
+        <dep id="spark.components:ComboBox" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="flash.events:Event" type="s" /> 
+        <dep id="spark.components:TextInput" type="s" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="spark.components:Button" type="s" /> 
+        <dep id="spark.components:Scroller" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.layouts:VerticalLayout" type="s" /> 
+        <dep id="mx.events:ResizeEvent" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="spark.components:PopUpAnchor" type="s" /> 
+        <dep id="mx.core:ClassFactory" type="s" /> 
+        <dep id="mx.events:FlexEvent" type="s" /> 
+        <dep id="spark.components:DataGroup" type="s" /> 
+        <dep id="spark.components:ComboBox" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableHScrollBar" mod="1334557000000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableHScrollBar" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="spark.components:HScrollBar" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/MoveManager" mod="1334557013000" signatureChecksum="157232966" >
+        <def id="flex.utils.spark.resize:MoveManager" /> 
+        <dep id="flash.events:Event" type="e" /> 
+        <dep id="flash.events:MouseEvent" type="e" /> 
+        <dep id="flex.utils.spark.resize:MoveManager_moveIcon" type="e" /> 
+        <dep id="flash.geom:Rectangle" type="e" /> 
+        <dep id="Math" type="e" /> 
+        <dep id="mx.managers:CursorManager" type="e" /> 
+        <dep id="flash.events:Event" type="s" /> 
+        <dep id="mx.core:UIComponent" type="s" /> 
+        <dep id="flash.events:MouseEvent" type="s" /> 
+        <dep id="flash.geom:Rectangle" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizablePanelSkinWatcherSetupUtil" mod="1334562428737" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizablePanelSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizablePanelSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableDropDownListSkin" mod="1334557003000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableDropDownListSkin" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="e" /> 
+        <dep id="spark.components:Scroller" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="spark.components:Label" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="spark.components:PopUpAnchor" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.core:ClassFactory" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="mx.states:AddItems" type="e" /> 
+        <dep id="spark.components:Button" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizableDropDownListSkinWatcherSetupUtil" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="spark.components:DropDownList" type="e" /> 
+        <dep id="spark.skins.spark:DefaultItemRenderer" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableScrollerSkin" type="e" /> 
+        <dep id="spark.skins.spark:DropDownListButtonSkin" type="e" /> 
+        <dep id="spark.components:DataGroup" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="flash.events:Event" type="s" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="spark.components:Button" type="s" /> 
+        <dep id="spark.components:Scroller" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.layouts:VerticalLayout" type="s" /> 
+        <dep id="spark.components:DropDownList" type="s" /> 
+        <dep id="mx.events:ResizeEvent" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="spark.components:PopUpAnchor" type="s" /> 
+        <dep id="mx.core:ClassFactory" type="s" /> 
+        <dep id="mx.events:FlexEvent" type="s" /> 
+        <dep id="spark.components:DataGroup" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableTitleWindowSkin" mod="1334561961000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableTitleWindowSkin" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="e" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
+        <dep id="spark.components:Label" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="spark.components:TitleWindow" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.graphics:LinearGradient" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizableTitleWindowSkinWatcherSetupUtil" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="mx.states:AddItems" type="e" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="mx.graphics:GradientEntry" type="e" /> 
+        <dep id="spark.components:Button" type="e" /> 
+        <dep id="spark.skins.spark:TitleWindowCloseButtonSkin" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="mx.core:DeferredInstanceFromFunction" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="mx.graphics:GradientEntry" type="s" /> 
+        <dep id="mx.graphics:LinearGradientStroke" type="s" /> 
+        <dep id="spark.components:Button" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.layouts:VerticalLayout" type="s" /> 
+        <dep id="spark.components:TitleWindow" type="s" /> 
+        <dep id="mx.graphics:LinearGradient" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="mx.events:FlexEvent" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizableDraggableSelectableTitleWindowSkinWatcherSetupUtil" mod="1334562428810" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizableDraggableSelectableTitleWindowSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableDraggableSelectableTitleWindowSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_TitledBorderBoxSkinWatcherSetupUtil" mod="1334562428988" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_TitledBorderBoxSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:FunctionReturnWatcher" type="e" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark:TitledBorderBoxSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableScrollerSkin" mod="1334561961000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableScrollerSkin" /> 
+        <dep id="mx.core:UIComponent" type="e" /> 
+        <dep id="Math" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="e" /> 
+        <dep id="spark.components:Scroller" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizableScrollerSkinWatcherSetupUtil" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableHScrollBar" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableVScrollBar" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="spark.components.supportClasses:Skin" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableHScrollBar" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="mx.core:UIComponent" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="s" /> 
+        <dep id="mx.events:FlexEvent" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="s" /> 
+        <dep id="spark.components:Scroller" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizableVScrollBar" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizableTitledBorderBoxSkinWatcherSetupUtil" mod="1334562428714" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizableTitledBorderBoxSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:FunctionReturnWatcher" type="e" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableTitledBorderBoxSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/DragHandle" mod="1334557015000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:DragHandle" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="_flex_utils_spark_resize_DragHandleWatcherSetupUtil" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.components:Group" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableTitledBorderBoxSkin" mod="1334561961000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableTitledBorderBoxSkin" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="spark.primitives:Path" type="e" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="e" /> 
+        <dep id="mx.utils:StringUtil" type="e" /> 
+        <dep id="Math" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="spark.layouts:BasicLayout" type="e" /> 
+        <dep id="spark.components:Label" type="e" /> 
+        <dep id="spark.layouts:VerticalLayout" type="e" /> 
+        <dep id="flex.utils.spark:TitledBorderBox" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizableTitledBorderBoxSkinWatcherSetupUtil" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="spark.primitives:Path" type="s" /> 
+        <dep id="spark.primitives:RectangularDropShadow" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeHandleLines" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="spark.components:Label" type="s" /> 
+        <dep id="spark.layouts:BasicLayout" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="flex.utils.spark:TitledBorderBox" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="flash.text:TextLineMetrics" type="s" /> 
+        <dep id="mx.events:FlexEvent" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.components.supportClasses:Skin" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizableTextAreaSkin" mod="1334556987000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizableTextAreaSkin" /> 
+        <dep id="spark.primitives:Rect" type="e" /> 
+        <dep id="spark.components:TextArea" type="e" /> 
+        <dep id="mx.states:SetProperty" type="e" /> 
+        <dep id="spark.components:RichEditableText" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="mx.states:State" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableScrollerSkin" type="e" /> 
+        <dep id="spark.components:Scroller" type="e" /> 
+        <dep id="mx.events:PropertyChangeEvent" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="spark.primitives:Rect" type="s" /> 
+        <dep id="spark.components:TextArea" type="s" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.components:RichEditableText" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="flex.utils.spark.resize:ResizeManager" type="s" /> 
+        <dep id="spark.components:Scroller" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.core:IStateClient2" type="i" /> 
+        <dep id="flash.events:IEventDispatcher" type="i" /> 
+        <dep id="spark.skins:SparkSkin" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizableDropDownListSkinWatcherSetupUtil" mod="1334562428824" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizableDropDownListSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableDropDownListSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <script name="_89d348c30718c1e2e7178a5b594556b93b46828652d24381c294ee91510410ac_flash_display_Sprite" mod="1334562429319" signatureChecksum="1152939849" >
+        <def id="_89d348c30718c1e2e7178a5b594556b93b46828652d24381c294ee91510410ac_flash_display_Sprite" /> 
+        <dep id="flash.system:Security" type="e" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="flash.display:Sprite" type="i" /> 
+      </script>
+      <script name="flex/utils/spark/resize/ResizeHandleLines" mod="1334556972000" signatureChecksum="1949174126" >
+        <def id="flex.utils.spark.resize:ResizeHandleLines" /> 
+        <dep id="spark.primitives:Path" type="e" /> 
+        <dep id="_flex_utils_spark_resize_ResizeHandleLinesWatcherSetupUtil" type="e" /> 
+        <dep id="mx.binding:Binding" type="e" /> 
+        <dep id="mx.graphics:SolidColor" type="e" /> 
+        <dep id="flash.utils:getDefinitionByName" type="e" /> 
+        <dep id="spark.primitives:Line" type="e" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="e" /> 
+        <dep id="mx.binding:BindingManager" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="spark.primitives:Path" type="s" /> 
+        <dep id="mx.graphics:SolidColor" type="s" /> 
+        <dep id="spark.primitives:Line" type="s" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="s" /> 
+        <dep id="mx.graphics:SolidColorStroke" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="mx.core:mx_internal" type="n" /> 
+        <dep id="mx.binding:IBindingClient" type="i" /> 
+        <dep id="spark.components:Group" type="i" /> 
+      </script>
+      <script name="_flex_utils_spark_resize_ResizableTitleWindowSkinWatcherSetupUtil" mod="1334562428667" signatureChecksum="5308497" >
+        <def id="_flex_utils_spark_resize_ResizableTitleWindowSkinWatcherSetupUtil" /> 
+        <dep id="mx.binding:PropertyWatcher" type="e" /> 
+        <dep id="flex.utils.spark.resize:ResizableTitleWindowSkin" type="e" /> 
+        <dep id="mx.core:IFlexModuleFactory" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="mx.binding:IWatcherSetupUtil2" type="i" /> 
+      </script>
+      <digests>
+        <digest type="SHA-256" signed="false" value="26d3e58407724294dcb6f874a0a3066e8ba33d377610246cf89cab7d9567571f"   />
+      </digests>
+    </library>
+  </libraries>
+  <files>
+    <file path="flex/utils/spark/TitledBorderBox.png" mod="1334302637000" />
+  </files>
+</swc>

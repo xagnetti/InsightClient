@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.adobe.insight</groupId>
+  <artifactId>insightCache</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<dependency>
+  		<groupId>commons-httpclient</groupId>
+  		<artifactId>commons-httpclient</artifactId>
+  		<version>3.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>net.sf.ehcache</groupId>
+  		<artifactId>ehcache</artifactId>
+  		<version>2.5.1</version>
+  		<type>pom</type>
+  	</dependency>
+  	<dependency>
+  		<groupId>net.sf.ehcache</groupId>
+  		<artifactId>ehcache-web-parent</artifactId>
+  		<version>2.0.4</version>
+  		<type>pom</type>
+  	</dependency>
+	 <dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-log4j12</artifactId>
+	    <version>1.5.8</version>
+	</dependency>
+
+  </dependencies>
+</project>

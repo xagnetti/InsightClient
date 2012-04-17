@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="false" useMultiPlatformConfig="false" version="3">
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="model.ModuleModel"/>
-    <classEntry path="modules.ChartWindow"/>
+    <classEntry path="model.QueryModel"/>
     <classEntry path="modules.EmptyDraggableWindow"/>
+    <classEntry path="modules.QueryLauncherWindow"/>
     <classEntry path="net.sakri.flash.bitmap.BitmapDataUtil"/>
     <classEntry path="net.sakri.flash.bitmap.BitmapEdgeScanner"/>
     <classEntry path="net.sakri.flash.bitmap.BitmapShapeExtractor"/>
@@ -13,7 +14,7 @@
     <classEntry path="net.sakri.flash.vector.VectorLine"/>
     <classEntry path="net.sakri.flash.vector.VectorShape"/>
     <classEntry path="services.QueryManager"/>
-    <classEntry path="model.QueryModel"/>
+    <classEntry path="views.LogPanel"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="net/.DS_Store" sourcePath="net/.DS_Store"/>
