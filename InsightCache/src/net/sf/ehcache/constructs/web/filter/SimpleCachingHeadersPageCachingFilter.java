@@ -49,26 +49,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.constructs.blocking.LockTimeoutException;
+import net.sf.ehcache.constructs.web.AlreadyCommittedException;
 import net.sf.ehcache.constructs.web.AlreadyGzippedException;
 import net.sf.ehcache.constructs.web.Header;
 import net.sf.ehcache.constructs.web.HttpDateFormatter;
 import net.sf.ehcache.constructs.web.PageInfo;
 import net.sf.ehcache.constructs.web.ResponseHeadersNotModifiableException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @WebFilter(urlPatterns =
 { "/ProxyServlet" })
 public class SimpleCachingHeadersPageCachingFilter extends SimplePageCachingFilter
 {
 
-   public static final String  NAME                     = "SimpleCachingHeadersPageCachingFilter";
-   private static final Logger LOG                      = LoggerFactory.getLogger( SimpleCachingHeadersPageCachingFilter.class );
-   private static final long   ONE_YEAR_IN_MILLISECONDS = 60
-                                                              * 60 * 24 * 365 * 1000L;
-   private static final int    MILLISECONDS_PER_SECOND  = 1000;
-   private HttpDateFormatter   httpDateFormatter;
+   public static final String NAME                     = "SimpleCachingHeadersPageCachingFilter";
+   private static final long  ONE_YEAR_IN_MILLISECONDS = 60
+                                                             * 60 * 24 * 365 * 1000L;
+   private static final int   MILLISECONDS_PER_SECOND  = 1000;
+   private HttpDateFormatter  httpDateFormatter;
 
    @Override
    protected PageInfo buildPage( final HttpServletRequest request,
@@ -122,6 +120,20 @@ public class SimpleCachingHeadersPageCachingFilter extends SimplePageCachingFilt
             return cacheConfiguration.getTimeToLiveSeconds()
                   * MILLISECONDS_PER_SECOND;
       }
+   }
+
+   @Override
+   protected void doFilter( final HttpServletRequest request,
+                            final HttpServletResponse response,
+                            final FilterChain chain ) throws AlreadyGzippedException,
+                                                     AlreadyCommittedException,
+                                                     FilterNonReentrantException,
+                                                     LockTimeoutException,
+                                                     Exception
+   {
+      super.doFilter( new InsightRequestWrapper( request ),
+                      response,
+                      chain );
    }
 
    protected final HttpDateFormatter getHttpDateFormatter()

@@ -14,6 +14,7 @@
     <fx:Declarations>
         <modules:EmptyDraggableWindow/>
         <modules:QueryLauncherWindow/>
+        <modules:GetSchemaWindow/>
     </fx:Declarations>
     <fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
@@ -54,6 +55,10 @@
                     <model:ModuleModel>
                         <model:name>Chart Window</model:name>
                         <model:className>modules.QueryLauncherWindow</model:className>
+                    </model:ModuleModel>
+                    <model:ModuleModel>
+                        <model:name>Get schema Window</model:name>
+                        <model:className>modules.GetSchemaWindow</model:className>
                     </model:ModuleModel>
                 </s:ArrayCollection>
 

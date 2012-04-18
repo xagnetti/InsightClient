@@ -1,6 +1,7 @@
 package com.adobe.insight;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,8 +9,6 @@ import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +19,8 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 
-@WebServlet(value = "/ProxyServlet", initParams =
-{ @WebInitParam(name = "proxyHost", value = "adobead-6tm1ol6.eur.adobe.com"),
- @WebInitParam(name = "proxyPort", value = "80"),
- @WebInitParam(name = "proxyPath", value = "/Profiles/Custom/API.query") })
 public class ProxyServlet extends HttpServlet
 {
    static MultiThreadedHttpConnectionManager connectionManager                 = new MultiThreadedHttpConnectionManager();
@@ -71,6 +67,7 @@ public class ProxyServlet extends HttpServlet
                                 httpServletResponse );
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void doPost( final HttpServletRequest httpServletRequest,
                        final HttpServletResponse httpServletResponse ) throws IOException,
@@ -80,14 +77,16 @@ public class ProxyServlet extends HttpServlet
       setProxyRequestHeaders( httpServletRequest,
                               postMethodProxyRequest );
 
-      postMethodProxyRequest.setRequestBody( httpServletRequest.getInputStream() );
+      final StringBuffer jb = new StringBuffer();
+      String line = null;
+      final BufferedReader reader = httpServletRequest.getReader();
+      while ( ( line = reader.readLine() ) != null )
+         jb.append( line );
 
-      httpServletResponse.setHeader( "Cache-Control",
-                                     "no-cache" );
-      httpServletResponse.setHeader( "Pragma",
-                                     "no-cache" );
-      httpServletResponse.setDateHeader( "Expires",
-                                         0 );
+      System.out.println( "ProxyServlet.doPost() <"
+            + jb.toString() + ">" );
+
+      postMethodProxyRequest.setRequestEntity( new StringRequestEntity( jb.toString() ) );
 
       this.executeProxyRequest( postMethodProxyRequest,
                                 httpServletRequest,
@@ -213,14 +212,9 @@ public class ProxyServlet extends HttpServlet
       if ( !this.getProxyPath().equalsIgnoreCase( "" ) )
          stringProxyURL += this.getProxyPath();
 
-      final String username = ""
-            + httpServletRequest.getSession().getAttribute( "username" );
-      final String password = ""
-            + httpServletRequest.getSession().getAttribute( "password" );
-
       if ( httpServletRequest.getQueryString() != null )
          stringProxyURL += "?"
-               + httpServletRequest.getQueryString() + "&username=" + username + "&password=" + password;
+               + httpServletRequest.getQueryString();
       return stringProxyURL;
    }
 

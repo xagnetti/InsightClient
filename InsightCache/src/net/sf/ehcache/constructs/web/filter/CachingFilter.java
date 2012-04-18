@@ -22,13 +22,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.zip.DataFormatException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -134,7 +132,6 @@ public abstract class CachingFilter extends Filter
       // Return the page info
       return new PageInfo( wrapper.getStatus(),
                            wrapper.getContentType(),
-                           wrapper.getCookies(),
                            outstr.toByteArray(),
                            true,
                            timeToLiveSeconds,
@@ -170,8 +167,8 @@ public abstract class CachingFilter extends Filter
                }
                else
                {
-                  if ( LOG.isDebugEnabled() )
-                     LOG.debug( "PageInfo was not ok(200). Putting null into cache "
+                  if ( LOG.isWarnEnabled() )
+                     LOG.warn( "PageInfo was not ok(200). Putting null into cache "
                            + blockingCache.getName() + " with key " + key );
                   blockingCache.put( new Element( key, null ) );
                }
@@ -276,12 +273,8 @@ public abstract class CachingFilter extends Filter
                               final HttpServletResponse response )
    {
 
-      final Collection cookies = pageInfo.getSerializableCookies();
-      for ( final Iterator iterator = cookies.iterator(); iterator.hasNext(); )
-      {
-         final Cookie cookie = ( ( SerializableCookie ) iterator.next() ).toCookie();
-         response.addCookie( cookie );
-      }
+      for ( final Object serializableCookie : pageInfo.getSerializableCookies() )
+         response.addCookie( ( ( SerializableCookie ) serializableCookie ).toCookie() );
    }
 
    protected void setHeaders( final PageInfo pageInfo,

@@ -16,8 +16,10 @@
 
 package net.sf.ehcache.constructs.web.filter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -26,59 +28,26 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * A generic {@link javax.servlet.Filter} with most of what we need done.
- * <p/>
- * Participates in the Template Method pattern with {@link javax.servlet.Filter}.
- * 
- * @author <a href="mailto:gluck@thoughtworks.com">Greg Luck</a>
- * @version $Id: Filter.java 746 2008-08-18 08:08:02Z gregluck $
- */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class Filter implements javax.servlet.Filter
 {
-   /**
-    * If a request attribute NO_FILTER is set, then filtering will be skipped
-    */
    public static final String  NO_FILTER = "NO_FILTER";
-
    private static final Logger LOG       = LoggerFactory.getLogger( Filter.class );
-
-   /**
-    * The filter configuration.
-    */
    protected FilterConfig      filterConfig;
-
-   /**
-    * The exceptions to log differently, as a comma separated list
-    */
    protected String            exceptionsToLogDifferently;
-
-   /**
-    * Most {@link Throwable}s in Web applications propagate to the user. Usually
-    * they are logged where they first happened. Printing the stack trace once a
-    * {@link Throwable} as propagated to the servlet is sometimes just clutters
-    * the log.
-    * <p/>
-    * This field corresponds to an init-param of the same name. If set to true
-    * stack traces will be suppressed.
-    */
    protected boolean           suppressStackTraces;
 
-   /**
-    * Performs the filtering. This method calls template method
-    * {@link #doFilter(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) }
-    * which does the filtering. This method takes care of error reporting and
-    * handling. Errors are reported at warn level because http tends to produce
-    * lots of errors.
-    * 
-    * @throws IOException if an IOException occurs during this method it will be
-    *            rethrown and will not be wrapped
-    */
+   @Override
+   public final void destroy()
+   {
+      this.filterConfig = null;
+      doDestroy();
+   }
+
+   @Override
    public final void doFilter( final ServletRequest request,
                                final ServletResponse response,
                                final FilterChain chain ) throws ServletException,
@@ -91,16 +60,12 @@ public abstract class Filter implements javax.servlet.Filter
          // NO_FILTER set for RequestDispatcher forwards to avoid double
          // gzipping
          if ( filterNotDisabled( httpRequest ) )
-         {
             doFilter( httpRequest,
                       httpResponse,
                       chain );
-         }
          else
-         {
             chain.doFilter( request,
                             response );
-         }
       }
       catch ( final Throwable throwable )
       {
@@ -110,128 +75,14 @@ public abstract class Filter implements javax.servlet.Filter
    }
 
    /**
-    * Filters can be disabled programmatically by adding a {@link #NO_FILTER}
-    * parameter to the request. This parameter is normally added to make
-    * RequestDispatcher include and forwards work.
-    * 
-    * @param httpRequest the request
-    * @return true if NO_FILTER is not set.
+    * Returns the filter config.
     */
-   protected boolean filterNotDisabled( final HttpServletRequest httpRequest )
+   public FilterConfig getFilterConfig()
    {
-      return httpRequest.getAttribute( NO_FILTER ) == null;
+      return filterConfig;
    }
 
-   /**
-    * This method should throw IOExceptions, not wrap them.
-    */
-   private void logThrowable( final Throwable throwable,
-                              final HttpServletRequest httpRequest ) throws ServletException,
-                                                                    IOException
-   {
-      StringBuffer messageBuffer = new StringBuffer( "Throwable thrown during doFilter on request with URI: " ).append( httpRequest.getRequestURI() )
-                                                                                                               .append( " and Query: " )
-                                                                                                               .append( httpRequest.getQueryString() );
-      String message = messageBuffer.toString();
-      boolean matchFound = matches( throwable );
-      if ( matchFound )
-      {
-         try
-         {
-            if ( suppressStackTraces )
-            {
-               LOG.error( throwable.getMessage() );
-            }
-            else
-            {
-               LOG.error( throwable.getMessage(),
-                          throwable );
-            }
-         }
-         catch ( Exception e )
-         {
-            LOG.error( "Could not invoke Log method",
-                       e );
-         }
-         if ( throwable instanceof IOException )
-         {
-            throw ( IOException ) throwable;
-         }
-         else
-         {
-            throw new ServletException( message, throwable );
-         }
-      }
-      else
-      {
-
-         if ( suppressStackTraces )
-         {
-            LOG.warn( messageBuffer.append( throwable.getMessage() )
-                                   .append( "\nTop StackTraceElement: " )
-                                   .append( throwable.getStackTrace()[ 0 ].toString() )
-                                   .toString() );
-         }
-         else
-         {
-            LOG.warn( messageBuffer.append( throwable.getMessage() ).toString(),
-                      throwable );
-         }
-         if ( throwable instanceof IOException )
-         {
-            throw ( IOException ) throwable;
-         }
-         else
-         {
-            throw new ServletException( throwable );
-         }
-      }
-   }
-
-   /**
-    * Checks whether a throwable, its root cause if it is a
-    * {@link ServletException}, or its cause, if it is a Chained Exception
-    * matches an entry in the exceptionsToLogDifferently list
-    * 
-    * @param throwable
-    * @return true if the class name of any of the throwables is found in the
-    *         exceptions to log differently
-    */
-   private boolean matches( Throwable throwable )
-   {
-      if ( exceptionsToLogDifferently == null )
-      {
-         return false;
-      }
-      if ( exceptionsToLogDifferently.indexOf( throwable.getClass().getName() ) != -1 )
-      {
-         return true;
-      }
-      if ( throwable instanceof ServletException )
-      {
-         Throwable rootCause = ( ( ( ServletException ) throwable ).getRootCause() );
-         if ( exceptionsToLogDifferently.indexOf( rootCause.getClass().getName() ) != -1 )
-         {
-            return true;
-         }
-      }
-      if ( throwable.getCause() != null )
-      {
-         Throwable cause = throwable.getCause();
-         if ( exceptionsToLogDifferently.indexOf( cause.getClass().getName() ) != -1 )
-         {
-            return true;
-         }
-      }
-      return false;
-   }
-
-   /**
-    * Initialises the filter.
-    * <p/>
-    * Calls template method {@link #doInit(javax.servlet.FilterConfig)} to
-    * perform any filter specific initialisation.
-    */
+   @Override
    public final void init( final FilterConfig filterConfig ) throws ServletException
    {
       try
@@ -251,72 +102,6 @@ public abstract class Filter implements javax.servlet.Filter
       }
    }
 
-   /**
-    * Processes initialisation parameters. These are configured in web.xml in
-    * accordance with the Servlet specification using the following syntax:
-    * 
-    * <pre>
-    * <filter>
-    *      ...
-    *      <init-param>
-    *          <param-name>blah</param-name>
-    *          <param-value>blahvalue</param-value>
-    *      </init-param>
-    *      ...
-    * </filter>
-    * </pre>
-    * 
-    * @throws ServletException
-    */
-   protected void processInitParams( final FilterConfig config ) throws ServletException
-   {
-      String exceptions = config.getInitParameter( "exceptionsToLogDifferently" );
-      String level = config.getInitParameter( "exceptionsToLogDifferentlyLevel" );
-      String suppressStackTracesString = config.getInitParameter( "suppressStackTraces" );
-      suppressStackTraces = Boolean.valueOf( suppressStackTracesString ).booleanValue();
-      if ( LOG.isDebugEnabled() )
-      {
-         LOG.debug( "Suppression of stack traces enabled for "
-               + this.getClass().getName() );
-      }
-
-      if ( exceptions != null )
-      {
-         validateMandatoryParameters( exceptions,
-                                      level );
-         exceptionsToLogDifferently = exceptions;
-         if ( LOG.isDebugEnabled() )
-         {
-            LOG.debug( "Different logging levels configured for "
-                  + this.getClass().getName() );
-         }
-      }
-   }
-
-   private void validateMandatoryParameters( String exceptions,
-                                             String level ) throws ServletException
-   {
-      if ( ( exceptions != null && level == null )
-            || ( level != null && exceptions == null ) )
-      {
-         throw new ServletException( "Invalid init-params. Both exceptionsToLogDifferently"
-               + " and exceptionsToLogDifferentlyLevelvalue should be specified if one is" + " specified." );
-      }
-   }
-
-   /**
-    * Destroys the filter. Calls template method {@link #doDestroy()} to perform
-    * any filter specific destruction tasks.
-    */
-   public final void destroy()
-   {
-      this.filterConfig = null;
-      doDestroy();
-   }
-
-   /**
-    * Checks if request accepts the named encoding.
-    */
    protected boolean acceptsEncoding( final HttpServletRequest request,
                                       final String name )
    {
@@ -326,45 +111,37 @@ public abstract class Filter implements javax.servlet.Filter
       return accepts;
    }
 
-   /**
-    * Checks if request contains the header value.
-    */
-   private boolean headerContains( final HttpServletRequest request,
-                                   final String header,
-                                   final String value )
+   protected boolean acceptsGzipEncoding( final HttpServletRequest request )
    {
-
-      logRequestHeaders( request );
-
-      final Enumeration accepted = request.getHeaders( header );
-      while ( accepted.hasMoreElements() )
-      {
-         final String headerValue = ( String ) accepted.nextElement();
-         if ( headerValue.indexOf( value ) != -1 )
-         {
-            return true;
-         }
-      }
-      return false;
+      return acceptsEncoding( request,
+                              "gzip" );
    }
 
-   /**
-    * Logs the request headers, if debug is enabled.
-    * 
-    * @param request
-    */
+   protected abstract void doDestroy();
+
+   protected abstract void doFilter( final HttpServletRequest httpRequest,
+                                     final HttpServletResponse httpResponse,
+                                     final FilterChain chain ) throws Throwable;
+
+   protected abstract void doInit( FilterConfig filterConfig ) throws Exception;
+
+   protected boolean filterNotDisabled( final HttpServletRequest httpRequest )
+   {
+      return httpRequest.getAttribute( NO_FILTER ) == null;
+   }
+
    protected void logRequestHeaders( final HttpServletRequest request )
    {
       if ( LOG.isDebugEnabled() )
       {
-         Map headers = new HashMap();
-         Enumeration enumeration = request.getHeaderNames();
-         StringBuffer logLine = new StringBuffer();
+         final Map< String, String > headers = new HashMap< String, String >();
+         final Enumeration< String > enumeration = request.getHeaderNames();
+         final StringBuffer logLine = new StringBuffer();
          logLine.append( "Request Headers" );
          while ( enumeration.hasMoreElements() )
          {
-            String name = ( String ) enumeration.nextElement();
-            String headerValue = request.getHeader( name );
+            final String name = enumeration.nextElement();
+            final String headerValue = request.getHeader( name );
             headers.put( name,
                          headerValue );
             logLine.append( ": " ).append( name ).append( " -> " ).append( headerValue );
@@ -373,67 +150,119 @@ public abstract class Filter implements javax.servlet.Filter
       }
    }
 
-   /**
-    * A template method that performs any Filter specific destruction tasks.
-    * Called from {@link #destroy()}
-    */
-   protected abstract void doDestroy();
-
-   /**
-    * A template method that performs the filtering for a request. Called from
-    * {@link #doFilter(ServletRequest,ServletResponse,FilterChain)}.
-    */
-   protected abstract void doFilter( final HttpServletRequest httpRequest,
-                                     final HttpServletResponse httpResponse,
-                                     final FilterChain chain ) throws Throwable;
-
-   /**
-    * A template method that performs any Filter specific initialisation tasks.
-    * Called from {@link #init(FilterConfig)}.
-    * 
-    * @param filterConfig
-    */
-   protected abstract void doInit( FilterConfig filterConfig ) throws Exception;
-
-   /**
-    * Returns the filter config.
-    */
-   public FilterConfig getFilterConfig()
+   protected void processInitParams( final FilterConfig config ) throws ServletException
    {
-      return filterConfig;
+      final String exceptions = config.getInitParameter( "exceptionsToLogDifferently" );
+      final String level = config.getInitParameter( "exceptionsToLogDifferentlyLevel" );
+      final String suppressStackTracesString = config.getInitParameter( "suppressStackTraces" );
+      suppressStackTraces = Boolean.valueOf( suppressStackTracesString ).booleanValue();
+      if ( LOG.isDebugEnabled() )
+         LOG.debug( "Suppression of stack traces enabled for "
+               + this.getClass().getName() );
+
+      if ( exceptions != null )
+      {
+         validateMandatoryParameters( exceptions,
+                                      level );
+         exceptionsToLogDifferently = exceptions;
+         if ( LOG.isDebugEnabled() )
+            LOG.debug( "Different logging levels configured for "
+                  + this.getClass().getName() );
+      }
    }
 
-   /**
-    * Determine whether the user agent accepts GZIP encoding. This feature is
-    * part of HTTP1.1. If a browser accepts GZIP encoding it will advertise this
-    * by including in its HTTP header:
-    * <p/>
-    * <code>
-    * Accept-Encoding: gzip
-    * </code>
-    * <p/>
-    * Requests which do not accept GZIP encoding fall into the following
-    * categories:
-    * <ul>
-    * <li>Old browsers, notably IE 5 on Macintosh.
-    * <li>Search robots such as yahoo. While there are quite a few bots, they
-    * only hit individual pages once or twice a day. Note that Googlebot as of
-    * August 2004 now accepts GZIP.
-    * <li>Internet Explorer through a proxy. By default HTTP1.1 is enabled but
-    * disabled when going through a proxy. 90% of non gzip requests are caused
-    * by this.
-    * <li>Site monitoring tools
-    * </ul>
-    * As of September 2004, about 34% of requests coming from the Internet did
-    * not accept GZIP encoding.
-    * 
-    * @param request
-    * @return true, if the User Agent request accepts GZIP encoding
-    */
-   protected boolean acceptsGzipEncoding( HttpServletRequest request )
+   private boolean headerContains( final HttpServletRequest request,
+                                   final String header,
+                                   final String value )
    {
-      return acceptsEncoding( request,
-                              "gzip" );
+
+      logRequestHeaders( request );
+
+      final Enumeration< String > accepted = request.getHeaders( header );
+      while ( accepted.hasMoreElements() )
+      {
+         final String headerValue = accepted.nextElement();
+         if ( headerValue.indexOf( value ) != -1 )
+            return true;
+      }
+      return false;
+   }
+
+   private void logThrowable( final Throwable throwable,
+                              final HttpServletRequest httpRequest ) throws ServletException,
+                                                                    IOException
+   {
+      final StringBuffer messageBuffer = new StringBuffer( "Throwable thrown during doFilter on request with URI: " ).append( httpRequest.getRequestURI() )
+                                                                                                                     .append( " and Query: " )
+                                                                                                                     .append( httpRequest.getQueryString() );
+      final String message = messageBuffer.toString();
+      final boolean matchFound = matches( throwable );
+      if ( matchFound )
+      {
+         try
+         {
+            if ( suppressStackTraces )
+               LOG.error( throwable.getMessage() );
+            else
+               LOG.error( throwable.getMessage(),
+                          throwable );
+         }
+         catch ( final Exception e )
+         {
+            LOG.error( "Could not invoke Log method",
+                       e );
+         }
+         if ( throwable instanceof IOException )
+            throw ( IOException ) throwable;
+         else
+            throw new ServletException( message, throwable );
+      }
+      else
+      {
+
+         if ( suppressStackTraces )
+            LOG.warn( messageBuffer.append( throwable.getMessage() )
+                                   .append( "\nTop StackTraceElement: " )
+                                   .append( throwable.getStackTrace()[ 0 ].toString() )
+                                   .toString() );
+         else
+            LOG.warn( messageBuffer.append( throwable.getMessage() ).toString(),
+                      throwable );
+         if ( throwable instanceof IOException )
+            throw ( IOException ) throwable;
+         else
+            throw new ServletException( throwable );
+      }
+   }
+
+   private boolean matches( final Throwable throwable )
+   {
+      if ( exceptionsToLogDifferently == null )
+         return false;
+      if ( exceptionsToLogDifferently.indexOf( throwable.getClass().getName() ) != -1 )
+         return true;
+      if ( throwable instanceof ServletException )
+      {
+         final Throwable rootCause = ( ( ( ServletException ) throwable ).getRootCause() );
+         if ( exceptionsToLogDifferently.indexOf( rootCause.getClass().getName() ) != -1 )
+            return true;
+      }
+      if ( throwable.getCause() != null )
+      {
+         final Throwable cause = throwable.getCause();
+         if ( exceptionsToLogDifferently.indexOf( cause.getClass().getName() ) != -1 )
+            return true;
+      }
+      return false;
+   }
+
+   private void validateMandatoryParameters( final String exceptions,
+                                             final String level ) throws ServletException
+   {
+      if ( ( ( exceptions != null ) && ( level == null ) )
+            || ( ( level != null ) && ( exceptions == null ) ) )
+         throw new ServletException( "Invalid init-params. Both exceptionsToLogDifferently"
+               + " and exceptionsToLogDifferentlyLevelvalue should be specified if one is" + " specified." );
    }
 
 }

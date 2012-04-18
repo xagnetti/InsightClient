@@ -16,15 +16,10 @@
 
 package net.sf.ehcache.constructs.web.filter;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.ehcache.CacheManager;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,17 +36,9 @@ public class SimplePageCachingFilter extends CachingFilter
                   .append( httpRequest.getRequestURI() )
                   .append( httpRequest.getQueryString() )
                   .append( "_" );
-      final OutputStream writer = new ByteArrayOutputStream();
-      try
-      {
-         IOUtils.copy( httpRequest.getInputStream(),
-                       writer );
-      }
-      catch ( final IOException e )
-      {
-      }
-      final String body = writer.toString();
-      final String key = stringBuffer.append( body ).toString();
+
+      final String key = stringBuffer.append( ( ( InsightRequestWrapper ) httpRequest ).getBody() )
+                                     .toString();
 
       return key;
    }

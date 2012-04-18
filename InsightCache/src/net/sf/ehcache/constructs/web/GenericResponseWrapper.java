@@ -62,8 +62,8 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
    private int                                      contentLength;
    private String                                   contentType;
    private final Map< String, List< Serializable >> headersMap         = new TreeMap< String, List< Serializable >>( String.CASE_INSENSITIVE_ORDER );
-   private final List                               cookies            = new ArrayList();
-   private ServletOutputStream                      outstr;
+   private final List< Cookie >                     cookies            = new ArrayList< Cookie >();
+   private final ServletOutputStream                outstr;
    private PrintWriter                              writer;
    private boolean                                  disableFlushBuffer = true;
    private transient HttpDateFormatter              httpDateFormatter;
@@ -79,165 +79,13 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
    }
 
    /**
-    * Gets the outputstream.
-    */
-   public ServletOutputStream getOutputStream()
-   {
-      return outstr;
-   }
-
-   /**
-    * Sets the status code for this response.
-    */
-   public void setStatus( final int code )
-   {
-      statusCode = code;
-      super.setStatus( code );
-   }
-
-   /**
-    * Send the error. If the response is not ok, most of the logic is bypassed
-    * and the error is sent raw Also, the content is not cached.
-    * 
-    * @param i the status code
-    * @param string the error message
-    * @throws IOException
-    */
-   public void sendError( int i,
-                          String string ) throws IOException
-   {
-      statusCode = i;
-      super.sendError( i,
-                       string );
-   }
-
-   /**
-    * Send the error. If the response is not ok, most of the logic is bypassed
-    * and the error is sent raw Also, the content is not cached.
-    * 
-    * @param i the status code
-    * @throws IOException
-    */
-   public void sendError( int i ) throws IOException
-   {
-      statusCode = i;
-      super.sendError( i );
-   }
-
-   /**
-    * Send the redirect. If the response is not ok, most of the logic is
-    * bypassed and the error is sent raw. Also, the content is not cached.
-    * 
-    * @param string the URL to redirect to
-    * @throws IOException
-    */
-   public void sendRedirect( String string ) throws IOException
-   {
-      statusCode = HttpServletResponse.SC_MOVED_TEMPORARILY;
-      super.sendRedirect( string );
-   }
-
-   /**
-    * Sets the status code for this response.
-    */
-   public void setStatus( final int code,
-                          final String msg )
-   {
-      statusCode = code;
-      LOG.warn( "Discarding message because this method is deprecated." );
-      super.setStatus( code );
-   }
-
-   /**
-    * Returns the status code for this response.
-    */
-   public int getStatus()
-   {
-      return statusCode;
-   }
-
-   /**
-    * Sets the content length.
-    */
-   public void setContentLength( final int length )
-   {
-      this.contentLength = length;
-      super.setContentLength( length );
-   }
-
-   /**
-    * Gets the content length.
-    */
-   public int getContentLength()
-   {
-      return contentLength;
-   }
-
-   /**
-    * Sets the content type.
-    */
-   public void setContentType( final String type )
-   {
-      this.contentType = type;
-      super.setContentType( type );
-   }
-
-   /**
-    * Gets the content type.
-    */
-   public String getContentType()
-   {
-      return contentType;
-   }
-
-   /**
-    * Gets the print writer.
-    */
-   public PrintWriter getWriter() throws IOException
-   {
-      if ( writer == null )
-      {
-         writer = new PrintWriter( new OutputStreamWriter( outstr, getCharacterEncoding() ), true );
-      }
-      return writer;
-   }
-
-   /**
-    * @see javax.servlet.http.HttpServletResponseWrapper#addHeader(java.lang.String,
-    *      java.lang.String)
+    * Adds a cookie.
     */
    @Override
-   public void addHeader( String name,
-                          String value )
+   public void addCookie( final Cookie cookie )
    {
-      List< Serializable > values = this.headersMap.get( name );
-      if ( values == null )
-      {
-         values = new LinkedList< Serializable >();
-         this.headersMap.put( name,
-                              values );
-      }
-      values.add( value );
-
-      super.addHeader( name,
-                       value );
-   }
-
-   /**
-    * @see javax.servlet.http.HttpServletResponseWrapper#setHeader(java.lang.String,
-    *      java.lang.String)
-    */
-   @Override
-   public void setHeader( String name,
-                          String value )
-   {
-      final LinkedList< Serializable > values = new LinkedList< Serializable >();
-      values.add( value );
-      this.headersMap.put( name,
-                           values );
-
-      super.setHeader( name,
-                       value );
+      cookies.add( cookie );
+      super.addCookie( cookie );
    }
 
    /**
@@ -245,8 +93,8 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
     *      long)
     */
    @Override
-   public void addDateHeader( String name,
-                              long date )
+   public void addDateHeader( final String name,
+                              final long date )
    {
       List< Serializable > values = this.headersMap.get( name );
       if ( values == null )
@@ -262,20 +110,24 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
    }
 
    /**
-    * @see javax.servlet.http.HttpServletResponseWrapper#setDateHeader(java.lang.String,
-    *      long)
+    * @see javax.servlet.http.HttpServletResponseWrapper#addHeader(java.lang.String,
+    *      java.lang.String)
     */
    @Override
-   public void setDateHeader( String name,
-                              long date )
+   public void addHeader( final String name,
+                          final String value )
    {
-      final LinkedList< Serializable > values = new LinkedList< Serializable >();
-      values.add( date );
-      this.headersMap.put( name,
-                           values );
+      List< Serializable > values = this.headersMap.get( name );
+      if ( values == null )
+      {
+         values = new LinkedList< Serializable >();
+         this.headersMap.put( name,
+                              values );
+      }
+      values.add( value );
 
-      super.setDateHeader( name,
-                           date );
+      super.addHeader( name,
+                       value );
    }
 
    /**
@@ -283,8 +135,8 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
     *      int)
     */
    @Override
-   public void addIntHeader( String name,
-                             int value )
+   public void addIntHeader( final String name,
+                             final int value )
    {
       List< Serializable > values = this.headersMap.get( name );
       if ( values == null )
@@ -300,30 +152,91 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
    }
 
    /**
-    * @see javax.servlet.http.HttpServletResponseWrapper#setIntHeader(java.lang.String,
-    *      int)
+    * Flushes all the streams for this response.
     */
-   @Override
-   public void setIntHeader( String name,
-                             int value )
+   public void flush() throws IOException
    {
-      final LinkedList< Serializable > values = new LinkedList< Serializable >();
-      values.add( value );
-      this.headersMap.put( name,
-                           values );
-
-      super.setIntHeader( name,
-                          value );
+      if ( writer != null )
+         writer.flush();
+      outstr.flush();
    }
 
-   private HttpDateFormatter getHttpDateFormatter()
+   /**
+    * Flushes buffer and commits response to client.
+    */
+   @Override
+   public void flushBuffer() throws IOException
    {
-      if ( this.httpDateFormatter == null )
+      flush();
+
+      // doing this might leads to response already committed exception
+      // when the PageInfo has not yet built but the buffer already flushed
+      // Happens in Weblogic when a servlet forward to a JSP page and the
+      // forward
+      // method trigger a flush before it forwarded to the JSP
+      // disableFlushBuffer for that purpose is 'true' by default
+      // EHC-447
+      if ( !disableFlushBuffer )
+         super.flushBuffer();
+   }
+
+   /**
+    * @return All of the headersMap set/added on the response
+    */
+   public Collection< Header< ? extends Serializable >> getAllHeaders()
+   {
+      final List< Header< ? extends Serializable >> headers = new LinkedList< Header< ? extends Serializable >>();
+
+      for ( final Map.Entry< String, List< Serializable >> headerEntry : this.headersMap.entrySet() )
       {
-         this.httpDateFormatter = new HttpDateFormatter();
+         final String name = headerEntry.getKey();
+         for ( final Serializable value : headerEntry.getValue() )
+         {
+            final Type type = Header.Type.determineType( value.getClass() );
+            switch ( type )
+            {
+            case STRING:
+               headers.add( new Header< String >( name, ( String ) value ) );
+               break;
+            case DATE:
+               headers.add( new Header< Long >( name, ( Long ) value ) );
+               break;
+            case INT:
+               headers.add( new Header< Integer >( name, ( Integer ) value ) );
+               break;
+            default:
+               throw new IllegalArgumentException( "No mapping for Header.Type: "
+                     + type );
+            }
+         }
       }
 
-      return this.httpDateFormatter;
+      return headers;
+   }
+
+   /**
+    * Gets the content length.
+    */
+   public int getContentLength()
+   {
+      return contentLength;
+   }
+
+   /**
+    * Gets the content type.
+    */
+   @Override
+   public String getContentType()
+   {
+      return contentType;
+   }
+
+   /**
+    * Gets all the cookies.
+    */
+   public Collection< Cookie > getCookies()
+   {
+      return cookies;
    }
 
    /**
@@ -331,6 +244,7 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
     * 
     * @deprecated use {@link #getAllHeaders()} instead
     */
+   @SuppressWarnings("rawtypes")
    @Deprecated
    public Collection getHeaders()
    {
@@ -372,107 +286,32 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
    }
 
    /**
-    * @return All of the headersMap set/added on the response
+    * Gets the outputstream.
     */
-   public Collection< Header< ? extends Serializable >> getAllHeaders()
+   @Override
+   public ServletOutputStream getOutputStream()
    {
-      final List< Header< ? extends Serializable >> headers = new LinkedList< Header< ? extends Serializable >>();
-
-      for ( final Map.Entry< String, List< Serializable >> headerEntry : this.headersMap.entrySet() )
-      {
-         final String name = headerEntry.getKey();
-         for ( final Serializable value : headerEntry.getValue() )
-         {
-            final Type type = Header.Type.determineType( value.getClass() );
-            switch ( type )
-            {
-            case STRING:
-               headers.add( new Header< String >( name, ( String ) value ) );
-               break;
-            case DATE:
-               headers.add( new Header< Long >( name, ( Long ) value ) );
-               break;
-            case INT:
-               headers.add( new Header< Integer >( name, ( Integer ) value ) );
-               break;
-            default:
-               throw new IllegalArgumentException( "No mapping for Header.Type: "
-                     + type );
-            }
-         }
-      }
-
-      return headers;
+      return outstr;
    }
 
    /**
-    * Adds a cookie.
+    * Returns the status code for this response.
     */
-   public void addCookie( final Cookie cookie )
+   @Override
+   public int getStatus()
    {
-      cookies.add( cookie );
-      super.addCookie( cookie );
+      return statusCode;
    }
 
    /**
-    * Gets all the cookies.
+    * Gets the print writer.
     */
-   public Collection getCookies()
+   @Override
+   public PrintWriter getWriter() throws IOException
    {
-      return cookies;
-   }
-
-   /**
-    * Flushes buffer and commits response to client.
-    */
-   public void flushBuffer() throws IOException
-   {
-      flush();
-
-      // doing this might leads to response already committed exception
-      // when the PageInfo has not yet built but the buffer already flushed
-      // Happens in Weblogic when a servlet forward to a JSP page and the
-      // forward
-      // method trigger a flush before it forwarded to the JSP
-      // disableFlushBuffer for that purpose is 'true' by default
-      // EHC-447
-      if ( !disableFlushBuffer )
-      {
-         super.flushBuffer();
-      }
-   }
-
-   /**
-    * Resets the response.
-    */
-   public void reset()
-   {
-      super.reset();
-      cookies.clear();
-      headersMap.clear();
-      statusCode = SC_OK;
-      contentType = null;
-      contentLength = 0;
-   }
-
-   /**
-    * Resets the buffers.
-    */
-   public void resetBuffer()
-   {
-      super.resetBuffer();
-   }
-
-   /**
-    * Flushes all the streams for this response.
-    */
-   public void flush() throws IOException
-   {
-      if ( writer != null )
-      {
-         writer.flush();
-      }
-      outstr.flush();
+      if ( writer == null )
+         writer = new PrintWriter( new OutputStreamWriter( outstr, getCharacterEncoding() ), true );
+      return writer;
    }
 
    /**
@@ -486,13 +325,182 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper implement
    }
 
    /**
+    * Resets the response.
+    */
+   @Override
+   public void reset()
+   {
+      super.reset();
+      cookies.clear();
+      headersMap.clear();
+      statusCode = SC_OK;
+      contentType = null;
+      contentLength = 0;
+   }
+
+   /**
+    * Resets the buffers.
+    */
+   @Override
+   public void resetBuffer()
+   {
+      super.resetBuffer();
+   }
+
+   /**
+    * Send the error. If the response is not ok, most of the logic is bypassed
+    * and the error is sent raw Also, the content is not cached.
+    * 
+    * @param i the status code
+    * @throws IOException
+    */
+   @Override
+   public void sendError( final int i ) throws IOException
+   {
+      statusCode = i;
+      super.sendError( i );
+   }
+
+   /**
+    * Send the error. If the response is not ok, most of the logic is bypassed
+    * and the error is sent raw Also, the content is not cached.
+    * 
+    * @param i the status code
+    * @param string the error message
+    * @throws IOException
+    */
+   @Override
+   public void sendError( final int i,
+                          final String string ) throws IOException
+   {
+      statusCode = i;
+      super.sendError( i,
+                       string );
+   }
+
+   /**
+    * Send the redirect. If the response is not ok, most of the logic is
+    * bypassed and the error is sent raw. Also, the content is not cached.
+    * 
+    * @param string the URL to redirect to
+    * @throws IOException
+    */
+   @Override
+   public void sendRedirect( final String string ) throws IOException
+   {
+      statusCode = HttpServletResponse.SC_MOVED_TEMPORARILY;
+      super.sendRedirect( string );
+   }
+
+   /**
+    * Sets the content length.
+    */
+   @Override
+   public void setContentLength( final int length )
+   {
+      this.contentLength = length;
+      super.setContentLength( length );
+   }
+
+   /**
+    * Sets the content type.
+    */
+   @Override
+   public void setContentType( final String type )
+   {
+      this.contentType = type;
+      super.setContentType( type );
+   }
+
+   /**
+    * @see javax.servlet.http.HttpServletResponseWrapper#setDateHeader(java.lang.String,
+    *      long)
+    */
+   @Override
+   public void setDateHeader( final String name,
+                              final long date )
+   {
+      final LinkedList< Serializable > values = new LinkedList< Serializable >();
+      values.add( date );
+      this.headersMap.put( name,
+                           values );
+
+      super.setDateHeader( name,
+                           date );
+   }
+
+   /**
     * Set if the wrapped reponse's buffer flushing should be disabled.
     * 
     * @param disableFlushBuffer true if the wrapped reponse's buffer flushing
     *           should be disabled
     */
-   public void setDisableFlushBuffer( boolean disableFlushBuffer )
+   public void setDisableFlushBuffer( final boolean disableFlushBuffer )
    {
       this.disableFlushBuffer = disableFlushBuffer;
+   }
+
+   /**
+    * @see javax.servlet.http.HttpServletResponseWrapper#setHeader(java.lang.String,
+    *      java.lang.String)
+    */
+   @Override
+   public void setHeader( final String name,
+                          final String value )
+   {
+      final LinkedList< Serializable > values = new LinkedList< Serializable >();
+      values.add( value );
+      this.headersMap.put( name,
+                           values );
+
+      super.setHeader( name,
+                       value );
+   }
+
+   /**
+    * @see javax.servlet.http.HttpServletResponseWrapper#setIntHeader(java.lang.String,
+    *      int)
+    */
+   @Override
+   public void setIntHeader( final String name,
+                             final int value )
+   {
+      final LinkedList< Serializable > values = new LinkedList< Serializable >();
+      values.add( value );
+      this.headersMap.put( name,
+                           values );
+
+      super.setIntHeader( name,
+                          value );
+   }
+
+   /**
+    * Sets the status code for this response.
+    */
+   @Override
+   public void setStatus( final int code )
+   {
+      statusCode = code;
+      super.setStatus( code );
+   }
+
+   /**
+    * Sets the status code for this response.
+    */
+   @Override
+   public void setStatus( final int code,
+                          final String msg )
+   {
+      statusCode = code;
+      LOG.warn( "Discarding message because this method is deprecated." );
+      super.setStatus( code );
+   }
+
+   private HttpDateFormatter getHttpDateFormatter()
+   {
+      if ( this.httpDateFormatter == null )
+         this.httpDateFormatter = new HttpDateFormatter();
+
+      return this.httpDateFormatter;
    }
 }

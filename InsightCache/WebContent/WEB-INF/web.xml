@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                       http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"> 
+
+
+    <display-name>Adobe Insight Proxy</display-name>
+    
+    <context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/log4j.properties</param-value>
+	</context-param>
+    
+    <!-- MessageBroker Servlet -->
+    <servlet>
+        <servlet-name>ProxyServlet</servlet-name>
+        <servlet-class>com.adobe.insight.ProxyServlet</servlet-class>
+        <init-param>
+            <param-name>proxyHost</param-name>
+            <param-value>adobead-6tm1ol6.eur.adobe.com</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPort</param-name>
+            <param-value>80</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPath</param-name>
+            <param-value>/Profiles/Custom/API.query</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProxyServlet</servlet-name>
+        <url-pattern>/ProxyServlet/*</url-pattern>
+    </servlet-mapping>
+    <!---->
+    <!--    <resource-ref>-->
+    <!--        <res-ref-name>jms/CF</res-ref-name>-->
+    <!--        <res-type>javax.jms.ConnectionFactory</res-type>-->
+    <!--        <res-auth>Container</res-auth>-->
+    <!--        <res-sharing-scope>Shareable</res-sharing-scope>-->
+    <!--    </resource-ref>-->
+    <!---->
+    <!--    <resource-ref>-->
+    <!--        <description>Prices Queue</description>-->
+    <!--        <res-ref-name>jms/pricesQueue</res-ref-name>-->
+    <!--        <res-type>javax.jms.Topic</res-type>-->
+    <!--        <res-auth>Container</res-auth>-->
+    <!--        <res-sharing-scope>Shareable</res-sharing-scope>-->
+    <!--    </resource-ref>-->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
