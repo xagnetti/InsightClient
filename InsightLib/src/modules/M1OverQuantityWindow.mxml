@@ -1,25 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:modules="modules.*"
     xmlns:mx="library://ns.adobe.com/flex/mx"
     xmlns:s="library://ns.adobe.com/flex/spark"
     width="350"
     height="300"
     implements="mx.rpc.IResponder"
     skinClass="flex.utils.spark.resize.ResizableDraggableSelectableTitleWindowSkin"
-    title="Query"
+    title="M1 Over Quantity (cached: { creationResponder.cached })"
     >
+    <fx:Declarations>
+        <modules:M1OverQuantityWindowCreationResponder id="creationResponder"
+            />
+    </fx:Declarations>
     <fx:Script>
         <![CDATA[
+            import mx.charts.series.LineSeries;
+            import mx.collections.ArrayCollection;
+            import mx.rpc.Responder;
+
             import services.QueryManager;
+
+            import spark.primitives.Line;
 
             protected function executeQueryHandler( event : MouseEvent ) : void
             {
-                QueryManager.instance.createQuery( queryStr.text, "test", null, this );
+                QueryManager.instance.createQuery( queryStr.text, "m2Chart", creationResponder, this );
             }
 
             public function result( data : Object ) : void
             {
-                resultArea.text = data.toString();
+                var result : Object = JSON.parse( data.toString() );
+                var dimension : String = result[ 1 ].dim;
+
+                var dataProvider : ArrayCollection = new ArrayCollection();
+
+                for each ( var e : Object in result[ 1 ].elements )
+                {
+                    var newItem : Object = new Object();
+
+                    newItem[ dimension ] = e;
+                    dataProvider.addItem( newItem );
+                }
+                lineChart.series = [];
+
+                for each ( var metrics : Object in result[ 1 ].metrics )
+                {
+                    var lineseries : LineSeries = new LineSeries();
+
+                    lineseries.xField = dimension;
+                    lineseries.yField = metrics.name;
+                    lineChart.series.push( lineseries );
+
+                    for ( var i : int = 0; i < metrics.values.length; i++ )
+                    {
+                        var item : Object = dataProvider.getItemAt( i );
+
+                        item[ metrics.name ] = metrics.values[ i ];
+                    }
+                }
+
+                lineChart.dataProvider = dataProvider;
+                //resultArea.text = data.toString();
             }
 
             public function fault( info : Object ) : void
@@ -42,10 +84,9 @@
             click="executeQueryHandler(event)"
             />
 
-        <s:TextArea id="resultArea"
+        <mx:LineChart id="lineChart"
             width="100%"
             height="100%"
-            editable="false"
             />
 
     </s:VGroup>

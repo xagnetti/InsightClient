@@ -156,13 +156,18 @@ package services
         private function onQueryCreated( event : HTTPStatusEvent ) : void
         {
             var queryId : String = "";
+            var cached : Boolean = false;
 
             for each ( var headerEntry : URLRequestHeader in event.responseHeaders )
             {
                 if ( headerEntry.name == "X-Query-ID" )
                 {
                     queryId = headerEntry.value;
-                    break;
+                }
+
+                if ( headerEntry.name == "cached" )
+                {
+                    cached = headerEntry.value.split( ", " )[ headerEntry.value.split( ", " ).length - 1 ] == "true";
                 }
             }
             dispatchEvent( new Event( "queryCreated" ) );
@@ -170,7 +175,7 @@ package services
 
             if ( responders[ alias + "_queryCreated" ] )
             {
-                IResponder( responders[ alias + "_queryCreated" ] ).result( queryId );
+                IResponder( responders[ alias + "_queryCreated" ] ).result( { queryId: queryId, cached: cached } );
             }
             executeCurrentQuery( alias, queryId );
         }

@@ -150,7 +150,6 @@ public class SimpleCachingHeadersPageCachingFilter extends SimplePageCachingFilt
                                                           DataFormatException,
                                                           ResponseHeadersNotModifiableException
    {
-
       final List< Header< ? extends Serializable >> headers = pageInfo.getHeaders();
       for ( final Header< ? extends Serializable > header : headers )
       {

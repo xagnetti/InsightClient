@@ -50,7 +50,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class CachingFilter extends Filter
 {
-
    private static class VisitLog extends ThreadLocal< Boolean >
    {
       public void clear()
@@ -74,20 +73,13 @@ public abstract class CachingFilter extends Filter
          return false;
       }
    }
+
    private static final Logger LOG                     = LoggerFactory.getLogger( CachingFilter.class );
    private static final String BLOCKING_TIMEOUT_MILLIS = "blockingTimeoutMillis";
-
    private static final String CACHE_NAME              = "cacheName";
-
    protected String            cacheName;
-
    protected BlockingCache     blockingCache;
-
    private final VisitLog      visitLog                = new VisitLog();
-
-   {
-      // noop
-   }
 
    @Override
    public void doInit( final FilterConfig filterConfig ) throws CacheException
@@ -158,6 +150,7 @@ public abstract class CachingFilter extends Filter
                pageInfo = buildPage( request,
                                      response,
                                      chain );
+               pageInfo.getHeaders().add( new Header< Serializable >( "cached", "false" ) );
                if ( pageInfo.isOk() )
                {
                   if ( LOG.isDebugEnabled() )
@@ -175,22 +168,21 @@ public abstract class CachingFilter extends Filter
             }
             catch ( final Throwable throwable )
             {
-               // Must unlock the cache if the above fails. Will be logged
-               // at Filter
                blockingCache.put( new Element( key, null ) );
                throw new Exception( throwable );
             }
          else
+         {
             pageInfo = ( PageInfo ) element.getObjectValue();
+            pageInfo.getHeaders().add( new Header< Serializable >( "cached", "true" ) );
+         }
       }
       catch ( final LockTimeoutException e )
       {
-         // do not release the lock, because you never acquired it
          throw e;
       }
       finally
       {
-         // all done building page, reset the re-entrant flag
          visitLog.clear();
       }
       return pageInfo;
@@ -206,7 +198,6 @@ public abstract class CachingFilter extends Filter
                + " filter " + filterName + ". URL: " + httpRequest.getRequestURL() );
       else
       {
-         // mark this thread as already visited
          visitLog.markAsVisited();
          if ( LOG.isDebugEnabled() )
             LOG.debug( "Thread {}  has been marked as visited.",
@@ -284,8 +275,6 @@ public abstract class CachingFilter extends Filter
 
       final Collection< Header< ? extends Serializable >> headers = pageInfo.getHeaders();
 
-      // Track which headers have been set so all headers of the same name
-      // after the first are added
       final TreeSet< String > setHeaders = new TreeSet< String >( String.CASE_INSENSITIVE_ORDER );
 
       for ( final Header< ? extends Serializable > header : headers )
@@ -384,7 +373,6 @@ public abstract class CachingFilter extends Filter
                       pageInfo );
       setCookies( pageInfo,
                   response );
-      // do headers last so that users can override with their own header sets
       setHeaders( pageInfo,
                   requestAcceptsGzipEncoding,
                   response );
@@ -405,6 +393,5 @@ public abstract class CachingFilter extends Filter
       {
          return null;
       }
-
    }
 }

@@ -80,7 +80,6 @@ public class PageInfo implements Serializable
    private boolean                                            storeGzipped;
    private Date                                               created;
    private long                                               timeToLiveSeconds;
-
    private transient HttpDateFormatter                        httpDateFormatter;
 
    /**
