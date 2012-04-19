@@ -16,6 +16,8 @@
 
 package net.sf.ehcache.constructs.web.filter;
 
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.ehcache.CacheManager;
@@ -37,8 +39,8 @@ public class SimplePageCachingFilter extends CachingFilter
                   .append( httpRequest.getQueryString() )
                   .append( "_" );
 
-      final String key = stringBuffer.append( ( ( InsightRequestWrapper ) httpRequest ).getBody() )
-                                     .toString();
+      final String body = removeSpaces( ( ( InsightRequestWrapper ) httpRequest ).getBody() );
+      final String key = stringBuffer.append( body ).toString();
 
       return key;
    }
@@ -65,5 +67,14 @@ public class SimplePageCachingFilter extends CachingFilter
                     DEFAULT_CACHE_NAME );
          return DEFAULT_CACHE_NAME;
       }
+   }
+
+   private String removeSpaces( final String s )
+   {
+      final StringTokenizer st = new StringTokenizer( s, " ", false );
+      String t = "";
+      while ( st.hasMoreElements() )
+         t += st.nextElement();
+      return t;
    }
 }

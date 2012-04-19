@@ -23,48 +23,48 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 
 public class ProxyServlet extends HttpServlet
 {
-   static MultiThreadedHttpConnectionManager connectionManager                 = new MultiThreadedHttpConnectionManager();
-   static HttpClient                         client                            = new HttpClient( connectionManager );
-   private static final long                 serialVersionUID                  = 1L;
-   private static final String               STRING_CONTENT_LENGTH_HEADER_NAME = "Content-Length";
-   private static final String               STRING_HOST_HEADER_NAME           = "Host";
-   private static final String               STRING_LOCATION_HEADER            = "Location";
-   private int                               intProxyPort                      = 80;
-   private boolean                           lockedProxyPort                   = false;
-   private String                            stringProxyHost;
-   private String                            stringProxyPath                   = "";
+   private static MultiThreadedHttpConnectionManager connectionManager          = new MultiThreadedHttpConnectionManager();
+   private static HttpClient                         client                     = new HttpClient( connectionManager );
+   private static final long                         serialVersionUID           = 1L;
+   private static final String                       CONTENT_LENGTH_HEADER_NAME = "Content-Length";
+   private static final String                       HOST_HEADER_NAME           = "Host";
+   private static final String                       LOCATION_HEADER            = "Location";
+   private int                                       intProxyPort               = 80;
+   private boolean                                   lockedProxyPort            = false;
+   private String                                    stringProxyHost;
+   private String                                    stringProxyPath            = "";
 
    @Override
-   public void doGet( final HttpServletRequest httpServletRequest,
-                      final HttpServletResponse httpServletResponse ) throws IOException,
-                                                                     ServletException
+   public void doGet( final HttpServletRequest request,
+                      final HttpServletResponse response ) throws IOException,
+                                                          ServletException
    {
       if ( !lockedProxyPort )
       {
-         final Integer proxyPort = ( Integer ) httpServletRequest.getSession().getAttribute( "proxyport" );
+         final Integer proxyPort = ( Integer ) request.getSession().getAttribute( "proxyport" );
          if ( proxyPort != null )
             this.intProxyPort = proxyPort;
          else
          {
-            httpServletResponse.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                                           "Invalid civclient session. Please log in again." );
+            response.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                                "Invalid civclient session. Please log in again." );
             return;
          }
       }
 
-      final GetMethod getMethodProxyRequest = new GetMethod( this.getProxyURL( httpServletRequest ) );
-      setProxyRequestHeaders( httpServletRequest,
-                              getMethodProxyRequest );
+      final GetMethod proxyRequest = new GetMethod( this.getProxyURL( request ) );
+      setProxyRequestHeaders( request,
+                              proxyRequest );
 
-      httpServletResponse.setHeader( "Cache-Control",
-                                     "no-cache" );
-      httpServletResponse.setHeader( "Pragma",
-                                     "no-cache" );
-      httpServletResponse.setDateHeader( "Expires",
-                                         0 );
-      this.executeProxyRequest( getMethodProxyRequest,
-                                httpServletRequest,
-                                httpServletResponse );
+      response.setHeader( "Cache-Control",
+                          "no-cache" );
+      response.setHeader( "Pragma",
+                          "no-cache" );
+      response.setDateHeader( "Expires",
+                              0 );
+      this.executeProxyRequest( proxyRequest,
+                                request,
+                                response );
    }
 
    @SuppressWarnings("deprecation")
@@ -82,9 +82,6 @@ public class ProxyServlet extends HttpServlet
       final BufferedReader reader = httpServletRequest.getReader();
       while ( ( line = reader.readLine() ) != null )
          jb.append( line );
-
-      System.out.println( "ProxyServlet.doPost() <"
-            + jb.toString() + ">" );
 
       postMethodProxyRequest.setRequestEntity( new StringRequestEntity( jb.toString() ) );
 
@@ -136,29 +133,31 @@ public class ProxyServlet extends HttpServlet
             && ( intProxyResponseCode < HttpServletResponse.SC_NOT_MODIFIED /* 304 */) )
       {
          final String stringStatusCode = Integer.toString( intProxyResponseCode );
-         final String stringLocation = httpMethodProxyRequest.getResponseHeader( STRING_LOCATION_HEADER )
-                                                             .getValue();
+         final String stringLocation = httpMethodProxyRequest.getResponseHeader( LOCATION_HEADER ).getValue();
          if ( stringLocation == null )
          {
             httpMethodProxyRequest.releaseConnection();
             throw new ServletException( "Recieved status code: "
-                  + stringStatusCode + " but no " + STRING_LOCATION_HEADER
-                  + " header was found in the response" );
+                  + stringStatusCode + " but no " + LOCATION_HEADER + " header was found in the response" );
          }
-         String stringMyHostName = httpServletRequest.getServerName();
+         final StringBuffer buffer = new StringBuffer();
+
+         buffer.append( httpServletRequest.getServerName() );
          if ( httpServletRequest.getServerPort() != 80 )
-            stringMyHostName += ":"
-                  + httpServletRequest.getServerPort();
-         stringMyHostName += httpServletRequest.getContextPath();
+         {
+            buffer.append( ':' );
+            buffer.append( httpServletRequest.getServerPort() );
+         }
+         buffer.append( httpServletRequest.getContextPath() );
          httpServletResponse.sendRedirect( stringLocation.replace( getProxyHostAndPort()
                                                                          + this.getProxyPath(),
-                                                                   stringMyHostName ) );
+                                                                   buffer.toString() ) );
          httpMethodProxyRequest.releaseConnection();
          return;
       }
       else if ( intProxyResponseCode == HttpServletResponse.SC_NOT_MODIFIED )
       {
-         httpServletResponse.setIntHeader( STRING_CONTENT_LENGTH_HEADER_NAME,
+         httpServletResponse.setIntHeader( CONTENT_LENGTH_HEADER_NAME,
                                            0 );
          httpServletResponse.setStatus( HttpServletResponse.SC_NOT_MODIFIED );
          httpMethodProxyRequest.releaseConnection();
@@ -207,15 +206,19 @@ public class ProxyServlet extends HttpServlet
 
    private String getProxyURL( final HttpServletRequest httpServletRequest )
    {
-      String stringProxyURL = "http://"
-            + this.getProxyHostAndPort();
+      final StringBuffer buffer = new StringBuffer();
+
+      buffer.append( "http://" );
+      buffer.append( this.getProxyHostAndPort() );
       if ( !this.getProxyPath().equalsIgnoreCase( "" ) )
-         stringProxyURL += this.getProxyPath();
+         buffer.append( this.getProxyPath() );
 
       if ( httpServletRequest.getQueryString() != null )
-         stringProxyURL += "?"
-               + httpServletRequest.getQueryString();
-      return stringProxyURL;
+      {
+         buffer.append( '?' );
+         buffer.append( httpServletRequest.getQueryString() );
+      }
+      return buffer.toString();
    }
 
    private void setProxyHost( final String stringProxyHostNew )
@@ -241,13 +244,13 @@ public class ProxyServlet extends HttpServlet
       while ( enumerationOfHeaderNames.hasMoreElements() )
       {
          final String stringHeaderName = enumerationOfHeaderNames.nextElement();
-         if ( stringHeaderName.equalsIgnoreCase( STRING_CONTENT_LENGTH_HEADER_NAME ) )
+         if ( stringHeaderName.equalsIgnoreCase( CONTENT_LENGTH_HEADER_NAME ) )
             continue;
          final Enumeration< String > enumerationOfHeaderValues = httpServletRequest.getHeaders( stringHeaderName );
          while ( enumerationOfHeaderValues.hasMoreElements() )
          {
             String stringHeaderValue = enumerationOfHeaderValues.nextElement();
-            if ( stringHeaderName.equalsIgnoreCase( STRING_HOST_HEADER_NAME ) )
+            if ( stringHeaderName.equalsIgnoreCase( HOST_HEADER_NAME ) )
                stringHeaderValue = getProxyHostAndPort();
             final Header header = new Header( stringHeaderName, stringHeaderValue );
             httpMethodProxyRequest.setRequestHeader( header );

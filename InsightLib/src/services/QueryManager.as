@@ -3,6 +3,7 @@ package services
     import flash.events.Event;
     import flash.events.EventDispatcher;
     import flash.events.HTTPStatusEvent;
+    import flash.events.IOErrorEvent;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
     import flash.net.URLRequestHeader;
@@ -13,6 +14,7 @@ package services
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
+    import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
     import mx.rpc.http.HTTPService;
 
@@ -46,7 +48,7 @@ package services
 
             if ( !allowInstantiation )
             {
-                throw new Error( "Error: Instantiation failed: Use QueryManager.instance instead of new." );
+                throw new Error( "Error: Instantiation failed: Use QueryManager.instance instead of new, you dummy." );
             }
         }
 
@@ -55,8 +57,8 @@ package services
         [Bindable]
         public var dimensions : ArrayCollection;
         private var currentQuery : QueryModel = null;
-//		private var host : String = "http://localhost:8080/InsightCache/ProxyServlet";
-        private var host : String = "http://adobead-6tm1ol6.eur.adobe.com/InsightCache/ProxyServlet";
+        private var host : String = "http://localhost:8080/InsightCache/ProxyServlet";
+//        private var host : String = "http://adobead-6tm1ol6.eur.adobe.com/Profiles/Custom/API.query";
         private var queries : Dictionary;
 
         public function createQuery( query : String, alias : String ) : void
@@ -71,7 +73,7 @@ package services
                 currentQuery = new QueryModel();
                 currentQuery.query = query;
                 currentQuery.alias = alias;
-                urlRequest.url = host + "?Action=create&Format=Json";
+                urlRequest.url = host + "?Action=create&Format=json&Completion=0&Language=Expression";
                 urlRequest.method = URLRequestMethod.POST;
                 urlRequest.contentType = HTTPService.CONTENT_TYPE_XML;
                 urlRequest.data = query;
@@ -105,8 +107,9 @@ package services
 
                 s.method = URLRequestMethod.POST;
                 s.contentType = HTTPService.CONTENT_TYPE_XML;
-                s.url = host + "?Action=result&Format=Json&Completion=0&Query-ID=" + currentQuery.id;
+                s.url = host + "?Action=result&Format=json&Completion=0&Query-ID=" + currentQuery.id;
                 s.addEventListener( ResultEvent.RESULT, onQueryExecuted );
+                s.addEventListener( FaultEvent.FAULT, onQueryExecuteErrored );
                 s.send();
                 dispatchEvent( new Event( "executeCurrentQuery" ) );
             }
@@ -114,6 +117,13 @@ package services
             {
                 Alert.show( "queryId is null" );
             }
+        }
+
+        private function onQueryExecuteErrored( event : FaultEvent ) : void
+        {
+            currentResult = event.message.toString();
+            currentQuery = null;
+            dispatchEvent( new Event( "queryExecuted" ) );
         }
 
         private function instanciateService() : HTTPService

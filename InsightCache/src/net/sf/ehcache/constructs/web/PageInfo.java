@@ -302,64 +302,16 @@ public class PageInfo implements Serializable
    }
 
    /**
-    * See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html To mark a
-    * response as "never expires," an origin server sends an Expires date
-    * approximately one year from the time the response is sent. HTTP/1.1
-    * servers SHOULD NOT send Expires dates more than one year in the future.
-    * 
-    * @param timeToLiveSeconds accepts 0, which means eternal. If the time is 0
-    *           or > one year, it is set to one year in accordance with the RFC.
-    *           <p/>
-    *           Note: PageInfo does not hold a reference to the ehcache Element
-    *           and therefore does not know what the Element ttl is. It would
-    *           normally make most sense to set the TTL to the same as the
-    *           element expiry.
-    */
-   protected void setTimeToLiveWithCheckForNeverExpires( final long timeToLiveSeconds )
-   {
-      // 0 means eternal
-      if ( ( timeToLiveSeconds == 0 )
-            || ( timeToLiveSeconds > ONE_YEAR_IN_SECONDS ) )
-         this.timeToLiveSeconds = ONE_YEAR_IN_SECONDS;
-      else
-         this.timeToLiveSeconds = timeToLiveSeconds;
-   }
-
-   private HttpDateFormatter getHttpDateFormatter()
-   {
-      if ( this.httpDateFormatter == null )
-         this.httpDateFormatter = new HttpDateFormatter();
-
-      return this.httpDateFormatter;
-   }
-
-   /**
-    * @param ungzipped the bytes to be gzipped
-    * @return gzipped bytes
-    */
-   private byte[] gzip( final byte[] ungzipped ) throws IOException,
-                                                AlreadyGzippedException
-   {
-      if ( isGzipped( ungzipped ) )
-         throw new AlreadyGzippedException( "The byte[] is already gzipped. It should not be gzipped again." );
-      final ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-      final GZIPOutputStream gzipOutputStream = new GZIPOutputStream( bytes );
-      gzipOutputStream.write( ungzipped );
-      gzipOutputStream.close();
-      return bytes.toByteArray();
-   }
-
-   /**
     * This really should be in the non-deprecated constructor but exists to
     * allow for the deprecated constructor to work correctly without duplicating
     * code.
     */
-   private void init( final int statusCode,
-                      final String contentType,
-                      final Collection< Header< ? extends Serializable >> headers,
-                      final byte[] body,
-                      final boolean storeGzipped,
-                      final long timeToLiveSeconds ) throws AlreadyGzippedException
+   protected final void init( final int statusCode,
+                              final String contentType,
+                              final Collection< Header< ? extends Serializable >> headers,
+                              final byte[] body,
+                              final boolean storeGzipped,
+                              final long timeToLiveSeconds ) throws AlreadyGzippedException
    {
       if ( headers != null )
          this.responseHeaders.addAll( headers );
@@ -395,6 +347,54 @@ public class PageInfo implements Serializable
                     e );
       }
 
+   }
+
+   /**
+    * See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html To mark a
+    * response as "never expires," an origin server sends an Expires date
+    * approximately one year from the time the response is sent. HTTP/1.1
+    * servers SHOULD NOT send Expires dates more than one year in the future.
+    * 
+    * @param timeToLiveSeconds accepts 0, which means eternal. If the time is 0
+    *           or > one year, it is set to one year in accordance with the RFC.
+    *           <p/>
+    *           Note: PageInfo does not hold a reference to the ehcache Element
+    *           and therefore does not know what the Element ttl is. It would
+    *           normally make most sense to set the TTL to the same as the
+    *           element expiry.
+    */
+   protected final void setTimeToLiveWithCheckForNeverExpires( final long timeToLiveSeconds )
+   {
+      // 0 means eternal
+      if ( ( timeToLiveSeconds == 0 )
+            || ( timeToLiveSeconds > ONE_YEAR_IN_SECONDS ) )
+         this.timeToLiveSeconds = ONE_YEAR_IN_SECONDS;
+      else
+         this.timeToLiveSeconds = timeToLiveSeconds;
+   }
+
+   private HttpDateFormatter getHttpDateFormatter()
+   {
+      if ( this.httpDateFormatter == null )
+         this.httpDateFormatter = new HttpDateFormatter();
+
+      return this.httpDateFormatter;
+   }
+
+   /**
+    * @param ungzipped the bytes to be gzipped
+    * @return gzipped bytes
+    */
+   private byte[] gzip( final byte[] ungzipped ) throws IOException,
+                                                AlreadyGzippedException
+   {
+      if ( isGzipped( ungzipped ) )
+         throw new AlreadyGzippedException( "The byte[] is already gzipped. It should not be gzipped again." );
+      final ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      final GZIPOutputStream gzipOutputStream = new GZIPOutputStream( bytes );
+      gzipOutputStream.write( ungzipped );
+      gzipOutputStream.close();
+      return bytes.toByteArray();
    }
 
    /**

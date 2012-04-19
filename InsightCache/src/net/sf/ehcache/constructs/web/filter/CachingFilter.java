@@ -85,6 +85,10 @@ public abstract class CachingFilter extends Filter
 
    private final VisitLog      visitLog                = new VisitLog();
 
+   {
+      // noop
+   }
+
    @Override
    public void doInit( final FilterConfig filterConfig ) throws CacheException
    {
@@ -119,8 +123,6 @@ public abstract class CachingFilter extends Filter
                                  final FilterChain chain ) throws AlreadyGzippedException,
                                                           Exception
    {
-
-      // Invoke the next entity in the chain
       final ByteArrayOutputStream outstr = new ByteArrayOutputStream();
       final GenericResponseWrapper wrapper = new GenericResponseWrapper( response, outstr );
       chain.doFilter( request,
@@ -153,8 +155,6 @@ public abstract class CachingFilter extends Filter
                || ( element.getObjectValue() == null ) )
             try
             {
-               // Page is not cached - build the response, cache it, and
-               // send to client
                pageInfo = buildPage( request,
                                      response,
                                      chain );
@@ -217,7 +217,7 @@ public abstract class CachingFilter extends Filter
    @Override
    protected void doDestroy()
    {
-      // noop
+
    }
 
    @Override

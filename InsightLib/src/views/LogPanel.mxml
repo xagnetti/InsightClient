@@ -31,7 +31,10 @@
             }
         ]]>
     </fx:Script>
+
     <s:TextArea id="text"
+        width="100%"
+        height="100%"
         />
 
 </s:Panel>

@@ -5,7 +5,7 @@
     width="350"
     height="300"
     skinClass="flex.utils.spark.resize.ResizableDraggableSelectableTitleWindowSkin"
-    title="Chart"
+    title="Query"
     >
     <fx:Script>
         <![CDATA[
@@ -20,18 +20,23 @@
         ]]>
     </fx:Script>
 
-    <s:VGroup>
+    <s:VGroup width="100%"
+        height="100%"
+        >
 
-        <s:TextArea id="queryStr"
+        <s:TextInput id="queryStr"
+            width="100%"
             >
-            <s:text>list Customer;</s:text>
-        </s:TextArea>
+            <s:text>eval m1 over Quantity;</s:text>
+        </s:TextInput>
         <s:Button label="Create Query"
             click="executeQueryHandler(event)"
             />
 
-        <s:TextArea text="{ QueryManager.instance.currentResult }"
-            enabled="false"
+        <s:TextArea width="100%"
+            height="100%"
+            text="{ QueryManager.instance.currentResult }"
+            editable="false"
             />
 
     </s:VGroup>

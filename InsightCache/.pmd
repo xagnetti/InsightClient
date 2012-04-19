@@ -157,7 +157,7 @@
         </rule>
         <rule>
             <name>CloneMethodMustImplementCloneable</name>
-            <ruleset>Clone Implementation Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>CloneThrowsCloneNotSupportedException</name>
@@ -297,7 +297,7 @@
         </rule>
         <rule>
             <name>LooseCoupling</name>
-            <ruleset>Coupling Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>AbstractClassWithoutAbstractMethod</name>
@@ -533,7 +533,7 @@
         </rule>
         <rule>
             <name>UnusedImports</name>
-            <ruleset>Import Statement Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>DoNotCallSystemExit</name>
@@ -857,7 +857,7 @@
         </rule>
         <rule>
             <name>SignatureDeclareThrowsException</name>
-            <ruleset>Strict Exception Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>AppendCharacterWithChar</name>
