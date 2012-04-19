@@ -3,17 +3,15 @@ package services
     import flash.events.Event;
     import flash.events.EventDispatcher;
     import flash.events.HTTPStatusEvent;
-    import flash.events.IOErrorEvent;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
     import flash.net.URLRequestHeader;
     import flash.net.URLRequestMethod;
     import flash.utils.Dictionary;
 
-    import model.QueryModel;
-
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
+    import mx.rpc.IResponder;
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
     import mx.rpc.http.HTTPService;
@@ -44,7 +42,7 @@ package services
         public function QueryManager() : void
         {
             dimensions = new ArrayCollection();
-            queries = new Dictionary();
+            responders = new Dictionary();
 
             if ( !allowInstantiation )
             {
@@ -53,34 +51,34 @@ package services
         }
 
         [Bindable]
-        public var currentResult : String;
+        public var currentStatus : String;
         [Bindable]
         public var dimensions : ArrayCollection;
-        private var currentQuery : QueryModel = null;
         private var host : String = "http://localhost:8080/InsightCache/ProxyServlet";
 //        private var host : String = "http://adobead-6tm1ol6.eur.adobe.com/Profiles/Custom/API.query";
-        private var queries : Dictionary;
+        private var responders : Dictionary;
 
-        public function createQuery( query : String, alias : String ) : void
+        public function createQuery( query : String, alias : String, queryCreatedResponder : IResponder, queryExecutedResponder : IResponder ) : void
         {
-            currentResult = "Loading";
+            currentStatus = "Loading";
 
-            if ( currentQuery == null )
-            {
-                var urlloader : URLLoader = new URLLoader();
-                var urlRequest : URLRequest = new URLRequest();
+            var urlloader : URLLoader = new URLLoader();
+            var urlRequest : URLRequest = new URLRequest();
 
-                currentQuery = new QueryModel();
-                currentQuery.query = query;
-                currentQuery.alias = alias;
-                urlRequest.url = host + "?Action=create&Format=json&Completion=0&Language=Expression";
-                urlRequest.method = URLRequestMethod.POST;
-                urlRequest.contentType = HTTPService.CONTENT_TYPE_XML;
-                urlRequest.data = query;
-                urlloader.addEventListener( HTTPStatusEvent.HTTP_RESPONSE_STATUS, onQueryCreated );
-                urlloader.load( urlRequest );
-                dispatchEvent( new Event( "createQuery" ) );
-            }
+            urlRequest.url = host + "?Action=create&Format=json&Completion=0&Language=Expression&alias=" + alias;
+            urlRequest.method = URLRequestMethod.POST;
+            urlRequest.contentType = HTTPService.CONTENT_TYPE_XML;
+            urlRequest.data = query;
+            urlRequest.requestHeaders[ "alias" ] = alias;
+            urlloader.addEventListener( HTTPStatusEvent.HTTP_RESPONSE_STATUS, onQueryCreated );
+            urlloader.load( urlRequest );
+            dispatchEvent( new Event( "createQuery" ) );
+
+            if ( queryCreatedResponder )
+                responders[ alias + "_queryCreated" ] = queryCreatedResponder;
+
+            if ( queryExecutedResponder )
+                responders[ alias + "_queryExecuted" ] = queryExecutedResponder;
         }
 
         public function getSchema() : void
@@ -94,20 +92,25 @@ package services
 
         protected function onQueryExecuted( event : ResultEvent ) : void
         {
-            currentResult = event.result.toString();
-            currentQuery = null;
+            var alias : String = String( event.currentTarget.url ).split( "&alias=" )[ 1 ];
+
+            if ( responders[ alias + "_queryExecuted" ] )
+            {
+                IResponder( responders[ alias + "_queryExecuted" ] ).result( event.result.toString() );
+            }
+
             dispatchEvent( new Event( "queryExecuted" ) );
         }
 
-        private function executeCurrentQuery() : void
+        private function executeCurrentQuery( alias : String, currentQueryId : String ) : void
         {
-            if ( currentQuery != null && currentQuery.id != null )
+            if ( currentQueryId != null )
             {
                 var s : HTTPService = instanciateService();
 
                 s.method = URLRequestMethod.POST;
                 s.contentType = HTTPService.CONTENT_TYPE_XML;
-                s.url = host + "?Action=result&Format=json&Completion=0&Query-ID=" + currentQuery.id;
+                s.url = host + "?Action=result&Format=json&Completion=0&Query-ID=" + currentQueryId + "&alias=" + alias;
                 s.addEventListener( ResultEvent.RESULT, onQueryExecuted );
                 s.addEventListener( FaultEvent.FAULT, onQueryExecuteErrored );
                 s.send();
@@ -121,8 +124,7 @@ package services
 
         private function onQueryExecuteErrored( event : FaultEvent ) : void
         {
-            currentResult = event.message.toString();
-            currentQuery = null;
+            currentStatus = event.message.toString();
             dispatchEvent( new Event( "queryExecuted" ) );
         }
 
@@ -153,17 +155,24 @@ package services
 
         private function onQueryCreated( event : HTTPStatusEvent ) : void
         {
+            var queryId : String = "";
+
             for each ( var headerEntry : URLRequestHeader in event.responseHeaders )
             {
                 if ( headerEntry.name == "X-Query-ID" )
                 {
-                    currentQuery.id = headerEntry.value;
-                    queries[ currentQuery.alias ] = currentQuery;
+                    queryId = headerEntry.value;
                     break;
                 }
             }
             dispatchEvent( new Event( "queryCreated" ) );
-            executeCurrentQuery();
+            var alias : String = event.responseURL.split( "&alias=" )[ 1 ];
+
+            if ( responders[ alias + "_queryCreated" ] )
+            {
+                IResponder( responders[ alias + "_queryCreated" ] ).result( queryId );
+            }
+            executeCurrentQuery( alias, queryId );
         }
     }
 }

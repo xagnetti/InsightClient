@@ -2,7 +2,6 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="model.ModuleModel"/>
-    <classEntry path="model.QueryModel"/>
     <classEntry path="modules.EmptyDraggableWindow"/>
     <classEntry path="modules.QueryLauncherWindow"/>
     <classEntry path="net.sakri.flash.bitmap.BitmapDataUtil"/>

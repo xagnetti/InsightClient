@@ -10,13 +10,11 @@
     >
     <fx:Script>
         <![CDATA[
-            import mx.events.FlexEvent;
-
             import services.QueryManager;
 
             protected function executeQueryHandler( event : MouseEvent ) : void
             {
-                QueryManager.instance.createQuery( queryStr.text, "sandbox", null, this );
+                QueryManager.instance.createQuery( queryStr.text, "test", null, this );
             }
 
             public function result( data : Object ) : void
